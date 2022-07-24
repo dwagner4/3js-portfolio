@@ -1,0 +1,73 @@
+:root {
+  --prussian-blue: #003049ff;
+  --maximum-red: #d62828ff;
+  --orange: #f77f00ff;
+  --maximum-yellow-red: #fcbf49ff;
+  --lemon-meringue: #eae2b7ff;
+  --primary-text-color: #003049ff;
+  --secondary-bg-color: #d62828;
+  --secondary-text-color: #f77f00ff;
+  --accent-color: #fcbf49ff;
+  --main-bg-color: #eae2b7ff;
+}
+
+html,
+body {
+  /* remove margins and scroll bars */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  /* style text */
+  text-align: center;
+  font-size: 12px;
+  font-family: Sans-Serif;
+
+  /* color text */
+  color: var(--primary-text-color);
+}
+
+/* Style the links inside the navigation bar */
+.btn {
+  color: var(--main-bg-color);
+  text-align: left;
+  padding-bottom: 5px;
+  width: 150px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight:bold;
+  opacity: 0.5;
+  border-bottom: 2px solid var(--main-bg-color);
+}
+
+/* Change the color of links on hover */
+.btn:hover {
+  opacity: 1;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+#homebtn {
+  position: fixed;
+  top: 50px;
+  left: 3%;
+}
+
+#menubtn {
+  position: fixed;
+  top: 125px;
+  left: 3%;
+}
+
+#aboutbtn {
+  position: fixed;
+  top: 200px;
+  left: 3%;
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 780px) {
+  /* .btn {
+    position: fixed;
+    bottom: 20px;
+  } */
+}
