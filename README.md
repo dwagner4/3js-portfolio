@@ -16,6 +16,8 @@ Index.html contains minimal html and possible grphics to display during the init
 
 main.js sets up html dynamic elements, subcribes to the finite state machine and loads the Stage instance
 
+The Stage.js parent has an overlay plane attached to the camera to use for fading to black, etc...
+
 actors and scenery all have init, update and dispose functions
 
 Large files and resources are loaded during each object's init() function which is async called recursively from the world's init()

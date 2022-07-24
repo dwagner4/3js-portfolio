@@ -53,15 +53,40 @@ body {
   left: 3%;
 }
 
-#menubtn {
+#brainbtn {
   position: fixed;
   top: 125px;
+  left: 3%;
+}
+#termbtn {
+  position: fixed;
+  top: 200px;
+  left: 3%;
+}
+#thrillbtn {
+  position: fixed;
+  top: 275px;
+  left: 3%;
+}
+#knightbtn {
+  position: fixed;
+  top: 350px;
+  left: 3%;
+}
+#birdsbtn {
+  position: fixed;
+  top: 425px;
+  left: 3%;
+}
+#bubblesbtn {
+  position: fixed;
+  top: 500px;
   left: 3%;
 }
 
 #aboutbtn {
   position: fixed;
-  top: 200px;
+  top: 575px;
   left: 3%;
 }
 

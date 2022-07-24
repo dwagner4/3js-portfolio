@@ -34,7 +34,12 @@ import Act1 from './stages/Act1.js';
  * homebtn.onmouseout = msgout
  */
 const homebtn = document.querySelector('#homebtn');
-const menubtn = document.querySelector('#menubtn');
+const brainbtn = document.querySelector('#brainbtn');
+const termbtn = document.querySelector('#termbtn');
+const thrillbtn = document.querySelector('#thrillbtn');
+const knightbtn = document.querySelector('#knightbtn');
+const birdsbtn = document.querySelector('#birdsbtn');
+const bubblesbtn = document.querySelector('#bubblesbtn');
 const aboutbtn = document.querySelector('#aboutbtn');
 
 const fadeDuration = 1;
@@ -56,11 +61,53 @@ homebtn.onclick = () => {
     onComplete: () => mainService.send({ type: 'HOME' }),
   });
 };
-menubtn.onclick = () => {
+brainbtn.onclick = () => {
   gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
     duration: fadeDuration,
     value: 1,
-    onComplete: () => mainService.send({ type: 'ONE' }),
+    onComplete: () => mainService.send({ type: 'BRAIN' }),
+  });
+};
+termbtn.onclick = () => {
+  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    duration: fadeDuration,
+    value: 1,
+    onComplete: () => mainService.send({ type: 'TERM' }),
+  });
+};
+thrillbtn.onclick = () => {
+  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    duration: fadeDuration,
+    value: 1,
+    onComplete: () => mainService.send({ type: 'THRILL' }),
+  });
+};
+knightbtn.onclick = () => {
+  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    duration: fadeDuration,
+    value: 1,
+    onComplete: () => mainService.send({ type: 'KNIGHT' }),
+  });
+};
+birdsbtn.onclick = () => {
+  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    duration: fadeDuration,
+    value: 1,
+    onComplete: () => mainService.send({ type: 'BIRDS' }),
+  });
+};
+bubblesbtn.onclick = () => {
+  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    duration: fadeDuration,
+    value: 1,
+    onComplete: () => mainService.send({ type: 'BUBBLES' }),
+  });
+};
+aboutbtn.onclick = () => {
+  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    duration: fadeDuration,
+    value: 1,
+    onComplete: () => mainService.send({ type: 'ABOUT' }),
   });
 };
 
@@ -123,9 +170,14 @@ const parseState = stateValue => {
 let currentStateStr = null;
 
 mainService.subscribe(state => {
-  homebtn.style.display = state.context.homebtn;
-  menubtn.style.display = state.context.nextbtn;
-  aboutbtn.style.display = state.context.aboutbtn;
+  // homebtn.style.display = state.context.homebtn;
+  // brainbtn.style.display = state.context.brainbtn;
+  // termbtn.style.display = state.context.termbtn;
+  // thrillbtn.style.display = state.context.thrillbtn;
+  // knightbtn.style.display = state.context.knightbtn;
+  // birdsbtn.style.display = state.context.birdsbtn;
+  // bubblesbtn.style.display = state.context.bubblesbtn;
+  // aboutbtn.style.display = state.context.aboutbtn;
 
   // changing world, don't want to restart world if not changed
   const stateStr = parseState(state.value);
