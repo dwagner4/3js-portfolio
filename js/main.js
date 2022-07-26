@@ -1,12 +1,12 @@
 /* eslint-disable new-cap */
 // eslint-disable-next-line import/no-unresolved
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap';
 
 /** import the Finite State Machine */
 import { mainService } from './mainMachine.js';
 
 /** import the stage and the initial world */
-import Act1 from './stages/Act1.js';
+// import Act1 from './stages/Act1.js';
 
 /**
  * connect to backend
@@ -42,92 +42,47 @@ const birdsbtn = document.querySelector('#birdsbtn');
 const bubblesbtn = document.querySelector('#bubblesbtn');
 const aboutbtn = document.querySelector('#aboutbtn');
 
-const fadeDuration = 1;
+// const fadeDuration = 1;
 
 /**
  * create Global stage
  */
-const container = document.querySelector('#scene-container');
-const stage = new Act1(container, {
-  controller: { type: 'orbit' },
-  debug: false,
-});
-stage.init();
+// const container = document.querySelector('#scene-container');
+// const stage = new Act1(container, {
+//   controller: { type: 'orbit' },
+//   debug: false,
+// });
+// stage.init();
 
 homebtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'HOME' }),
-  });
+  mainService.send({ type: 'HOME' });
 };
+// gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+//   duration: fadeDuration,
+//   value: 1,
+//   onComplete: () => mainService.send({ type: 'HOME' }),
+// });
+// };
 brainbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'BRAIN' }),
-  });
+  mainService.send({ type: 'BRAIN' });
 };
 termbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'TERM' }),
-  });
+  mainService.send({ type: 'TERM' });
 };
 thrillbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'THRILL' }),
-  });
+  mainService.send({ type: 'THRILL' });
 };
 knightbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'KNIGHT' }),
-  });
+  mainService.send({ type: 'KNIGHT' });
 };
 birdsbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'BIRDS' }),
-  });
+  mainService.send({ type: 'BIRDS' });
 };
 bubblesbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'BUBBLES' }),
-  });
+  mainService.send({ type: 'BUBBLES' });
 };
 aboutbtn.onclick = () => {
-  gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-    duration: fadeDuration,
-    value: 1,
-    onComplete: () => mainService.send({ type: 'ABOUT' }),
-  });
-};
-
-/**
- * just load the world
- */
-// stage.world = new InitialWorld(stage);
-// stage.world.init();
-stage.start();
-
-/**
- * world utility functions
- */
-// eslint-disable-next-line no-unused-vars
-const killWorld = () => {
-  // gsap.to(this.overlayMaterial.uniforms.uAlpha, {duration: 3, value: 1})
-
-  stage.stop();
-  stage.world.dispose();
-  stage.update();
+  mainService.send({ type: 'ABOUT' });
 };
 
 /**
@@ -181,35 +136,60 @@ mainService.subscribe(state => {
 
   // changing world, don't want to restart world if not changed
   const stateStr = parseState(state.value);
+
   if (stateStr !== currentStateStr) {
     if (stateStr === 'home') {
-      if (stage.world) {
-        killWorld();
-      }
-      import('./worlds/InitialWorld.js').then(module => {
-        stage.world = new module.default(stage);
-        stage.world.init();
+      // const container = document.querySelector('#scene-container');
+      import('./scenes/HomeScene.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
         stage.start();
-        gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-          duration: fadeDuration,
-          value: 0,
-        });
+        console.log(stage);
       });
     }
-    if (stateStr === 'one') {
-      if (stage.world) {
-        killWorld();
-      }
-      import('./worlds/OneWorld.js').then(module => {
-        stage.world = new module.default(stage);
-        stage.world.init();
+    if (stateStr === 'brain') {
+      // const container = document.querySelector('#scene-container');
+      console.log('AAA');
+      import('./scenes/BrainOneScene.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
         stage.start();
-        gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
-          duration: fadeDuration,
-          value: 0,
-        });
+        console.log(stage);
       });
     }
+    if (stateStr === 'term') {
+      // const container = document.querySelector('#scene-container');
+      console.log('AAA');
+      import('./scenes/TermScene2.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
+        stage.start();
+        console.log(stage);
+      });
+    }
+    if (stateStr === 'birds') {
+      // const container = document.querySelector('#scene-container');
+      import('./scenes/BrainOneScene2.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
+        stage.start();
+        console.log(stage);
+      });
+    }
+    // if (stateStr === 'term') {
+    //   if (stage.world) {
+    //     killWorld();
+    //   }
+    //   import('./worlds/TermWorld.js').then(module => {
+    //     stage.world = new module.default(stage);
+    //     stage.world.init();
+    //     stage.start();
+    //     gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+    //       duration: fadeDuration,
+    //       value: 0,
+    //     });
+    //   });
+    // }
 
     currentStateStr = stateStr;
   }

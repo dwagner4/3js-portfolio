@@ -10,13 +10,37 @@ const mainMachine = createMachine(
       home: {
         entry: ['selecthome'],
         on: {
-          ONE: { target: 'one' },
+          HOME: { target: 'home' },
+          TERM: { target: 'term' },
+          BIRDS: { target: 'birds' },
+          BRAIN: { target: 'brain' },
         },
       },
-      one: {
+      brain: {
         entry: ['selectone'],
         on: {
           HOME: { target: 'home' },
+          TERM: { target: 'term' },
+          BIRDS: { target: 'birds' },
+          BRAIN: { target: 'brain' },
+        },
+      },
+      term: {
+        entry: ['selectone'],
+        on: {
+          HOME: { target: 'home' },
+          TERM: { target: 'term' },
+          BIRDS: { target: 'birds' },
+          BRAIN: { target: 'brain' },
+        },
+      },
+      birds: {
+        entry: ['selectone'],
+        on: {
+          HOME: { target: 'home' },
+          TERM: { target: 'term' },
+          BIRDS: { target: 'birds' },
+          BRAIN: { target: 'brain' },
         },
       },
     },

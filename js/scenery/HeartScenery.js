@@ -1,9 +1,7 @@
 import * as THREE from 'three';
-import Scenery from '../systems/Scenery.js';
 
-export default class HeartScenery extends Scenery {
+export default class HeartScenery {
   constructor() {
-    super();
     this.hemilight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.5);
 
     this.light = new THREE.DirectionalLight(0xffffff, 0.5);
