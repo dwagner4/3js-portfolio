@@ -12,33 +12,47 @@ const mainMachine = createMachine(
         on: {
           HOME: { target: 'home' },
           TERM: { target: 'term' },
+          THRILL: { target: 'thrill' },
           BIRDS: { target: 'birds' },
           BRAIN: { target: 'brain' },
         },
       },
       brain: {
-        entry: ['selectone'],
+        entry: ['selecthome'],
         on: {
           HOME: { target: 'home' },
           TERM: { target: 'term' },
+          THRILL: { target: 'thrill' },
           BIRDS: { target: 'birds' },
           BRAIN: { target: 'brain' },
         },
       },
       term: {
-        entry: ['selectone'],
+        entry: ['selecthome'],
         on: {
           HOME: { target: 'home' },
           TERM: { target: 'term' },
+          THRILL: { target: 'thrill' },
+          BIRDS: { target: 'birds' },
+          BRAIN: { target: 'brain' },
+        },
+      },
+      thrill: {
+        entry: ['selectthrill'],
+        on: {
+          HOME: { target: 'home' },
+          TERM: { target: 'term' },
+          THRILL: { target: 'thrill' },
           BIRDS: { target: 'birds' },
           BRAIN: { target: 'brain' },
         },
       },
       birds: {
-        entry: ['selectone'],
+        entry: ['selecthome'],
         on: {
           HOME: { target: 'home' },
           TERM: { target: 'term' },
+          THRILL: { target: 'thrill' },
           BIRDS: { target: 'birds' },
           BRAIN: { target: 'brain' },
         },
@@ -49,13 +63,25 @@ const mainMachine = createMachine(
     actions: {
       selecthome: assign({
         homebtn: 'block',
-        menubtn: 'block',
+        brainbtn: 'block',
+        termbtn: 'block',
+        thrillbtn: 'block',
+        knightbtn: 'block',
+        birdsbtn: 'block',
+        bubblesbtn: 'block',
         aboutbtn: 'block',
+        dancebtn: 'none',
       }),
-      selectone: assign({
-        homebtn: 'block',
-        menubtn: 'none',
+      selectthrill: assign({
+        homebtn: 'none',
+        brainbtn: 'none',
+        termbtn: 'none',
+        thrillbtn: 'none',
+        knightbtn: 'none',
+        birdsbtn: 'none',
+        bubblesbtn: 'none',
         aboutbtn: 'none',
+        dancebtn: 'block',
       }),
     },
   }

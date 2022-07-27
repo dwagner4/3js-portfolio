@@ -41,6 +41,7 @@ const knightbtn = document.querySelector('#knightbtn');
 const birdsbtn = document.querySelector('#birdsbtn');
 const bubblesbtn = document.querySelector('#bubblesbtn');
 const aboutbtn = document.querySelector('#aboutbtn');
+const dancebtn = document.querySelector('#dance');
 
 // const fadeDuration = 1;
 
@@ -125,14 +126,15 @@ const parseState = stateValue => {
 let currentStateStr = null;
 
 mainService.subscribe(state => {
-  // homebtn.style.display = state.context.homebtn;
-  // brainbtn.style.display = state.context.brainbtn;
-  // termbtn.style.display = state.context.termbtn;
-  // thrillbtn.style.display = state.context.thrillbtn;
-  // knightbtn.style.display = state.context.knightbtn;
-  // birdsbtn.style.display = state.context.birdsbtn;
-  // bubblesbtn.style.display = state.context.bubblesbtn;
-  // aboutbtn.style.display = state.context.aboutbtn;
+  homebtn.style.display = state.context.homebtn;
+  brainbtn.style.display = state.context.brainbtn;
+  termbtn.style.display = state.context.termbtn;
+  thrillbtn.style.display = state.context.thrillbtn;
+  knightbtn.style.display = state.context.knightbtn;
+  birdsbtn.style.display = state.context.birdsbtn;
+  bubblesbtn.style.display = state.context.bubblesbtn;
+  aboutbtn.style.display = state.context.aboutbtn;
+  dancebtn.style.display = state.context.dancebtn;
 
   // changing world, don't want to restart world if not changed
   const stateStr = parseState(state.value);
@@ -161,6 +163,16 @@ mainService.subscribe(state => {
       // const container = document.querySelector('#scene-container');
       console.log('AAA');
       import('./scenes/TermScene2.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
+        stage.start();
+        console.log(stage);
+      });
+    }
+    if (stateStr === 'thrill') {
+      // const container = document.querySelector('#scene-container');
+      console.log('AAA');
+      import('./scenes/ThrillScene.js').then(module => {
         const stage = new module.default('scene-container');
         stage.init();
         stage.start();

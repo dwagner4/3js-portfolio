@@ -75,7 +75,7 @@ export default class BrainOneScene2 extends SceneThree {
   }
 
   dispose() {
-    this.stage.disableVR();
+    this.disableVR();
     this.brain.dispose();
     this.brain.model.removeFromParent();
     // this.hemi.removeFromParent();
