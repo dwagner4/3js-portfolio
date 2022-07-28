@@ -66,7 +66,8 @@ export default class FallingBalls {
         // eslint-disable-next-line no-plusplus, no-unused-expressions
         this.ballcount >= this.numberOfBalls - 1
           ? (this.ballcount = 0)
-          : this.ballcount++;
+          : // eslint-disable-next-line no-plusplus
+            this.ballcount++;
       }
       this.lastBall = currentTime;
     }
