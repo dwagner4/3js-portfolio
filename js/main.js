@@ -179,6 +179,16 @@ mainService.subscribe(state => {
         console.log(stage);
       });
     }
+    if (stateStr === 'knight') {
+      // const container = document.querySelector('#scene-container');
+      console.log('AAA');
+      import('./scenes/VRKnightScene.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
+        stage.start();
+        console.log(stage);
+      });
+    }
     if (stateStr === 'birds') {
       // const container = document.querySelector('#scene-container');
       import('./scenes/BrainOneScene2.js').then(module => {
