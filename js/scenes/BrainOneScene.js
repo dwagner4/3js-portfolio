@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as dat from 'lil-gui';
 import SceneThree from '../systems/SceneThree.js';
 
 // import HeartScenery from '../scenery/HeartScenery.js';
@@ -10,6 +11,26 @@ import BrainOne from '../actors/BrainOne.js';
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
     super(canvasId);
+
+    this.gui = new dat.GUI();
+    this.gui.close();
+    this.gui.show();
+    this.params = {
+      lightIntensity: 1.0,
+      greyMatterOpacity: 1.0,
+      Anterior_Cerebral_Artery: false,
+      Anterior_Communicating_Artery: false,
+      Anterior_Inferior_Cerebellar_Artery: false,
+      Basilar_Artery: false,
+      Internal_Carotid_Artery: false,
+      Middle_Cerebral_Artery: false,
+      Posterior_Cerebral_Artery: false,
+      Posterior_Communicating_Artery: false,
+      Superior_Cerebellar_Artery: false,
+      Vertebral_Artery: false,
+    };
+    this.gui.add(this.params, 'lightIntensity', 0.0, 4.0, 0.1);
+    this.gui.add(this.params, 'greyMatterOpacity', 0.0, 1.0, 0.01);
 
     this.camera.position.set(0, 5, -30);
     this.scene.background = new THREE.Color(0xa0a0a0);
@@ -25,9 +46,16 @@ export default class BrainOneScene extends SceneThree {
     // light2.position.set(0, 0, 5);
     // this.stage.scene.add(light2);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(3, 3, 0);
-    this.scene.add(directionalLight);
+    this.directionalLight = new THREE.DirectionalLight(
+      0xffffff,
+      this.params.lightIntensity
+    );
+    this.directionalLight.position.set(3, 3, 0);
+
+    this.scene.add(this.directionalLight);
+
+    this.ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+    this.scene.add(this.ambientLight);
 
     this.brain = {};
   }
@@ -36,53 +64,99 @@ export default class BrainOneScene extends SceneThree {
     await super.init();
 
     this.controls.target = new THREE.Vector3(0, 0.05, 0);
-
-    // this.heart = new Heart();
-    // await this.heart.init();
-    // this.heart.model.position.y += 0.95;
-    // this.stage.scene.add(this.heart.model);
-
     this.brain = new BrainOne();
     await this.brain.init();
     this.brain.model.position.y += -10;
-    // const frontal = this.brain.brain
-    // const scalar = new THREE.Matrix4().makeScale(0.0001, 0.0001, 0.0001);
-    // frontal.applyMatrix4(scalar);
-    // frontal.material.transparent = true
-    // frontal.material.opacity = 1.0
+    console.log(this.brain.model);
+    this.arteryMaterial = this.brain.model.getObjectByName(
+      'Anterior_Cerebral_Artery'
+    ).material;
+    this.arteryMaterial.transparent = true;
+    this.arteryMaterial.opacity = this.params.arteryOpacity;
 
-    console.log(this.brain);
-    // const newMat = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true})
-    // frontal.material = newMat
-    // frontal.material.transparent = true
-    // frontal.material.opacity = 0.5
-    // frontal.material.wireframe = true
-    // frontal.rotateX(-Math.PI / 2);
-    // frontal.rotateZ(Math.PI);
+    this.Anterior_Cerebral_Artery = this.brain.model.getObjectByName(
+      'Anterior_Cerebral_Artery'
+    );
+    this.Anterior_Cerebral_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    this.Anterior_Communicating_Artery = this.brain.model.getObjectByName(
+      'Anterior_Communicating_Artery'
+    );
+    this.Anterior_Communicating_Artery.material =
+      new THREE.MeshStandardMaterial({ color: 0x660000 });
+    this.Anterior_Inferior_Cerebellar_Artery = this.brain.model.getObjectByName(
+      'Anterior_Inferior_Cerebellar_Artery'
+    );
+    this.Anterior_Inferior_Cerebellar_Artery.material =
+      new THREE.MeshStandardMaterial({ color: 0x660000 });
+    this.Basilar_Artery = this.brain.model.getObjectByName('Basilar_Artery');
+    this.Basilar_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    this.Internal_Carotid_Artery = this.brain.model.getObjectByName(
+      'Internal_Carotid_Artery'
+    );
+    this.Internal_Carotid_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    this.Middle_Cerebral_Artery = this.brain.model.getObjectByName(
+      'Middle_Cerebral_Artery'
+    );
+    this.Middle_Cerebral_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    this.Posterior_Cerebral_Artery = this.brain.model.getObjectByName(
+      'Posterior_Cerebral_Artery'
+    );
+    this.Posterior_Cerebral_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    this.Posterior_Communicating_Artery = this.brain.model.getObjectByName(
+      'Posterior_Communicating_Artery'
+    );
+    this.Posterior_Communicating_Artery.material =
+      new THREE.MeshStandardMaterial({ color: 0x660000 });
+    this.Superior_Cerebellar_Artery = this.brain.model.getObjectByName(
+      'Superior_Cerebellar_Artery'
+    );
+    this.Superior_Cerebellar_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    this.Vertebral_Artery =
+      this.brain.model.getObjectByName('Vertebral_Artery');
+    this.Vertebral_Artery.material = new THREE.MeshStandardMaterial({
+      color: 0x660000,
+    });
+    const arteries = this.gui.addFolder('Arteries');
+    arteries.add(this.params, 'Anterior_Cerebral_Artery');
+
+    this.greyMatter = this.brain.model.getObjectByName('Brain');
+    this.greyMatter.material.transparent = true;
+    this.greyMatter.material.opacity = this.params.greyMatterOpacity;
+    // this.greyMatter.material.wireframe = true
+
+    console.log(this.artery);
+
     this.scene.add(this.brain.model);
-
-    // this.sphere = new MySphere();
-    // await this.sphere.init();
-    // this.sphere.model.position.x += 1;
-    // this.sphere.model.position.y += 0.25;
-    // this.sphere.model.castShadow = true;
-    // this.stage.scene.add(this.sphere.model);
   }
 
   update(time) {
     super.update(time);
+    this.directionalLight.intensity = this.params.lightIntensity;
+    if (this.greyMatter) {
+      this.greyMatter.material.opacity = this.params.greyMatterOpacity;
+    }
+    if (this.params.Anterior_Cerebral_Artery) {
+      this.Anterior_Cerebral_Artery.material.color = new THREE.Color(0x00aa00);
+    } else if (this.Anterior_Cerebral_Artery) {
+      this.Anterior_Cerebral_Artery.material.color = new THREE.Color(0x660000);
+    }
   }
 
   dispose() {
     this.stage.disableVR();
     this.brain.dispose();
     this.brain.model.removeFromParent();
-    // this.hemi.removeFromParent();
-    // this.light.removeFromParent();
-    // this.plane.geometry.dispose();
-    // this.plane.material.dispose();
-    // this.plane.removeFromParent();
-    // this.sphere.dispose();
-    // this.sphere.model.removeFromParent();
   }
 }
