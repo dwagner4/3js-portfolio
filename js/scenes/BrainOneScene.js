@@ -54,7 +54,7 @@ export default class BrainOneScene extends SceneThree {
 
     this.scene.add(this.directionalLight);
 
-    this.ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+    this.ambientLight = new THREE.AmbientLight(0x666666); // soft white light
     this.scene.add(this.ambientLight);
 
     this.brain = {};
@@ -68,6 +68,7 @@ export default class BrainOneScene extends SceneThree {
     await this.brain.init();
     this.brain.model.position.y += -10;
     console.log(this.brain.model);
+
     this.arteryMaterial = this.brain.model.getObjectByName(
       'Anterior_Cerebral_Artery'
     ).material;
@@ -80,20 +81,24 @@ export default class BrainOneScene extends SceneThree {
     this.Anterior_Cerebral_Artery.material = new THREE.MeshStandardMaterial({
       color: 0x660000,
     });
+
     this.Anterior_Communicating_Artery = this.brain.model.getObjectByName(
       'Anterior_Communicating_Artery'
     );
     this.Anterior_Communicating_Artery.material =
       new THREE.MeshStandardMaterial({ color: 0x660000 });
+
     this.Anterior_Inferior_Cerebellar_Artery = this.brain.model.getObjectByName(
       'Anterior_Inferior_Cerebellar_Artery'
     );
     this.Anterior_Inferior_Cerebellar_Artery.material =
       new THREE.MeshStandardMaterial({ color: 0x660000 });
+
     this.Basilar_Artery = this.brain.model.getObjectByName('Basilar_Artery');
     this.Basilar_Artery.material = new THREE.MeshStandardMaterial({
       color: 0x660000,
     });
+
     this.Internal_Carotid_Artery = this.brain.model.getObjectByName(
       'Internal_Carotid_Artery'
     );
@@ -130,6 +135,15 @@ export default class BrainOneScene extends SceneThree {
     });
     const arteries = this.gui.addFolder('Arteries');
     arteries.add(this.params, 'Anterior_Cerebral_Artery');
+    arteries.add(this.params, 'Anterior_Communicating_Artery');
+    arteries.add(this.params, 'Anterior_Inferior_Cerebellar_Artery');
+    arteries.add(this.params, 'Basilar_Artery');
+    arteries.add(this.params, 'Internal_Carotid_Artery');
+    arteries.add(this.params, 'Middle_Cerebral_Artery');
+    arteries.add(this.params, 'Posterior_Cerebral_Artery');
+    arteries.add(this.params, 'Posterior_Communicating_Artery');
+    arteries.add(this.params, 'Superior_Cerebellar_Artery');
+    arteries.add(this.params, 'Vertebral_Artery');
 
     this.greyMatter = this.brain.model.getObjectByName('Brain');
     this.greyMatter.material.transparent = true;
@@ -148,9 +162,70 @@ export default class BrainOneScene extends SceneThree {
       this.greyMatter.material.opacity = this.params.greyMatterOpacity;
     }
     if (this.params.Anterior_Cerebral_Artery) {
-      this.Anterior_Cerebral_Artery.material.color = new THREE.Color(0x00aa00);
+      this.Anterior_Cerebral_Artery.material.color = new THREE.Color(0xff00aa);
     } else if (this.Anterior_Cerebral_Artery) {
       this.Anterior_Cerebral_Artery.material.color = new THREE.Color(0x660000);
+    }
+    if (this.params.Anterior_Communicating_Artery) {
+      this.Anterior_Communicating_Artery.material.color = new THREE.Color(
+        0xff00aa
+      );
+    } else if (this.Anterior_Communicating_Artery) {
+      this.Anterior_Communicating_Artery.material.color = new THREE.Color(
+        0x660000
+      );
+    }
+    if (this.params.Anterior_Inferior_Cerebellar_Artery) {
+      this.Anterior_Inferior_Cerebellar_Artery.material.color = new THREE.Color(
+        0xff00aa
+      );
+    } else if (this.Anterior_Inferior_Cerebellar_Artery) {
+      this.Anterior_Inferior_Cerebellar_Artery.material.color = new THREE.Color(
+        0x660000
+      );
+    }
+    if (this.params.Basilar_Artery) {
+      this.Basilar_Artery.material.color = new THREE.Color(0xff00aa);
+    } else if (this.Basilar_Artery) {
+      this.Basilar_Artery.material.color = new THREE.Color(0x660000);
+    }
+    if (this.params.Internal_Carotid_Artery) {
+      this.Internal_Carotid_Artery.material.color = new THREE.Color(0xff00aa);
+    } else if (this.Internal_Carotid_Artery) {
+      this.Internal_Carotid_Artery.material.color = new THREE.Color(0x660000);
+    }
+    if (this.params.Middle_Cerebral_Artery) {
+      this.Middle_Cerebral_Artery.material.color = new THREE.Color(0xff00aa);
+    } else if (this.Middle_Cerebral_Artery) {
+      this.Middle_Cerebral_Artery.material.color = new THREE.Color(0x660000);
+    }
+    if (this.params.Posterior_Cerebral_Artery) {
+      this.Posterior_Cerebral_Artery.material.color = new THREE.Color(0xff00aa);
+    } else if (this.Posterior_Cerebral_Artery) {
+      this.Posterior_Cerebral_Artery.material.color = new THREE.Color(0x660000);
+    }
+    if (this.params.Posterior_Communicating_Artery) {
+      this.Posterior_Communicating_Artery.material.color = new THREE.Color(
+        0xff00aa
+      );
+    } else if (this.Posterior_Communicating_Artery) {
+      this.Posterior_Communicating_Artery.material.color = new THREE.Color(
+        0x660000
+      );
+    }
+    if (this.params.Superior_Cerebellar_Artery) {
+      this.Superior_Cerebellar_Artery.material.color = new THREE.Color(
+        0xff00aa
+      );
+    } else if (this.Superior_Cerebellar_Artery) {
+      this.Superior_Cerebellar_Artery.material.color = new THREE.Color(
+        0x660000
+      );
+    }
+    if (this.params.Vertebral_Artery) {
+      this.Vertebral_Artery.material.color = new THREE.Color(0xff00aa);
+    } else if (this.Vertebral_Artery) {
+      this.Vertebral_Artery.material.color = new THREE.Color(0x660000);
     }
   }
 
