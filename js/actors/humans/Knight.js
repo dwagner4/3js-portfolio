@@ -54,9 +54,9 @@ export default class Knight extends Actor {
     this.animation.actions.current.play();
 
     this.animation.mixer.addEventListener('loop', e => {
-      console.log(e);
+      // console.log(e);
       this.loopcount += 1;
-      console.log(this.loopcount, e.action._loopCount, e.action._clip.name);
+      // console.log(this.loopcount, e.action._loopCount, e.action._clip.name);
       if (this.loopcount >= e.action.repetitions - 1) {
         // if ( this.loopcount >= 5) {
         this.loopcount = 0;

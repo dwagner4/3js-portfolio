@@ -6,18 +6,37 @@ import SceneThree from '../systems/SceneThree.js';
 // import HeartScenery from '../scenery/HeartScenery.js';
 
 import BrainOne from '../actors/BrainOne.js';
+import BrainClot from '../actors/brainclot.js';
 // import MySphere from '../props/MySphere.js';
+import { brainService } from './brainMachine.js';
 
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
     super(canvasId);
+
+    const resetbtn = document.querySelector('#resetbtn');
+    resetbtn.onclick = () => {
+      brainService.send({ type: 'HOME' });
+    };
+    const nextbtn = document.querySelector('#nextbtn');
+    nextbtn.onclick = () => {
+      brainService.send({ type: 'NEXT' });
+    };
+    const drugbtn = document.querySelector('#drugbtn');
+    drugbtn.onclick = () => {
+      brainService.send({ type: 'DRUG' });
+    };
+    const rewindbtn = document.querySelector('#rewindbtn');
+    rewindbtn.onclick = () => {
+      brainService.send({ type: 'REWIND' });
+    };
 
     this.gui = new dat.GUI();
     this.gui.close();
     this.gui.show();
     this.params = {
       lightIntensity: 1.0,
-      greyMatterOpacity: 1.0,
+      greyMatterOpacity: 0.1,
       Anterior_Cerebral_Artery: false,
       Anterior_Communicating_Artery: false,
       Anterior_Inferior_Cerebellar_Artery: false,
@@ -58,6 +77,7 @@ export default class BrainOneScene extends SceneThree {
     this.scene.add(this.ambientLight);
 
     this.brain = {};
+    this.brainClot = {};
   }
 
   async init() {
@@ -104,6 +124,8 @@ export default class BrainOneScene extends SceneThree {
     );
     this.Internal_Carotid_Artery.material = new THREE.MeshStandardMaterial({
       color: 0x660000,
+      transparent: true,
+      opacity: 0.5,
     });
     this.Middle_Cerebral_Artery = this.brain.model.getObjectByName(
       'Middle_Cerebral_Artery'
@@ -150,9 +172,14 @@ export default class BrainOneScene extends SceneThree {
     this.greyMatter.material.opacity = this.params.greyMatterOpacity;
     // this.greyMatter.material.wireframe = true
 
-    console.log(this.artery);
-
     this.scene.add(this.brain.model);
+
+    this.brainClot = new BrainClot();
+    this.brainClot.init();
+    this.brainClot.lesion.rotateY(Math.PI);
+    this.brainClot.lesion.position.set(-2.25, -8, -0.1);
+    this.brainClot.lesion.rotateX(Math.PI / 20);
+    this.scene.add(this.brainClot.lesion);
   }
 
   update(time) {

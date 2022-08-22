@@ -117,6 +117,31 @@ body {
   /* background-color: #d62828; */
 }
 
+
+#resetbtn {
+  position: fixed;
+  top: 125px;
+  right: 3%;
+}
+
+#nextbtn {
+  position: fixed;
+  top: 200px;
+  right: 3%;
+}
+
+#drugbtn {
+  position: fixed;
+  top: 275px;
+  right: 3%;
+}
+
+#rewindbtn {
+  position: fixed;
+  top: 350px;
+  right: 3%;
+}
+
 @media screen and (min-device-width: 320px) and (max-device-width: 780px) {
   /* .btn {
     position: fixed;
