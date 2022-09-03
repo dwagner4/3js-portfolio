@@ -180,6 +180,20 @@ export default class BrainOneScene extends SceneThree {
     this.brainClot.lesion.position.set(-2.25, -8, -0.1);
     this.brainClot.lesion.rotateX(Math.PI / 20);
     this.scene.add(this.brainClot.lesion);
+
+    const times = [0, 3];
+    const values = [0, 5, -30, 0, 1, -10];
+    const positionKF = new THREE.VectorKeyframeTrack(
+      '.position',
+      times,
+      values
+    );
+    const tracks = [positionKF];
+    const length = -1;
+    const clip = new THREE.AnimationClip('slowmove', length, tracks);
+    this.camera.animation.actions.slowmove =
+      this.camera.animation.mixer.clipAction(clip);
+    this.camera.animation.play('slowmove');
   }
 
   update(time) {

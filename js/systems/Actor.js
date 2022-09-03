@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-// import * as THREE from 'three';
+import * as THREE from 'three';
 
 export default class Actor {
   constructor() {
@@ -12,28 +12,9 @@ export default class Actor {
   async init() {
     /** load the model */
 
-    /** 
-     * loadAsync animations
-     * pass clipAction to action object from animations array
-     * 
-     * this.stage.glbloader.loadAsync(
-        '/assets/models/elf/elf-worker-thriller-4.glb'
-      ),
-       this.animations = [
-        ...elfData.animations,
-       ];
-      this.animation.actions.idle = this.animation.mixer
-        .clipAction(this.animations[0])
-        .setLoop(THREE.LoopRepeat, 4);
-      */
+    /** make AnimationClips and AnimationActions */
 
-    /**
-     * this.animation.actions.current = this.animation.actions.idle;
-     * this.animation.mixer.addEventListener('loop', e => {
-     * this.animation.mixer.addEventListener('finished', e => {
-     */
-
-    // this.animation.mixer = new THREE.AnimationMixer(this.model);
+    this.animation.mixer = new THREE.AnimationMixer(this.model);
 
     this.animation.play = name => {
       const newAction = this.animation.actions[name];

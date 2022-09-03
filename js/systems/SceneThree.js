@@ -68,6 +68,21 @@ export default class SceneThree {
       1000
     );
 
+    // Set up animation for camera object
+    this.camera.animation = {
+      mixer: new THREE.AnimationMixer(this.camera),
+      actions: {},
+      play: name => {
+        const newAction = this.camera.animation.actions[name];
+        const oldAction = this.camera.animation.actions.current;
+        newAction.reset();
+        newAction.play();
+        newAction.crossFadeFrom(oldAction, 1);
+
+        this.animation.actions.current = newAction;
+      },
+    };
+
     /** setup renderer function */
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
@@ -134,6 +149,11 @@ export default class SceneThree {
     this.time.elapsed = this.current - this.time.start;
 
     this.controls?.update(this.time.delta);
+
+    // Update the mixer on each frame
+    // function update () {
+    this.camera.animation.mixer.update(this.time.delta * 0.001);
+    // }
 
     this.physWorld?.step(1 / 60, this.time.delta, 3);
     // this.world?.update(this.time);

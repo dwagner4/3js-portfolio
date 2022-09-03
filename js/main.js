@@ -200,12 +200,12 @@ mainService.subscribe(state => {
     }
     if (stateStr === 'birds') {
       // const container = document.querySelector('#scene-container');
-      import('./scenes/BrainOneScene2.js').then(module => {
-        const stage = new module.default('scene-container');
-        stage.init();
-        stage.start();
-        console.log(stage);
-      });
+      // import('./scenes/BrainOneScene2.js').then(module => {
+      //   const stage = new module.default('scene-container');
+      //   stage.init();
+      //   stage.start();
+      //   console.log(stage);
+      // });
     }
     // if (stateStr === 'term') {
     //   if (stage.world) {
