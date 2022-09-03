@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'lil-gui';
 import SceneThree from '../systems/SceneThree.js';
+import AnimCamera from '../systems/AnimCamera.js';
 
 // import HeartScenery from '../scenery/HeartScenery.js';
 
@@ -51,19 +52,13 @@ export default class BrainOneScene extends SceneThree {
     this.gui.add(this.params, 'lightIntensity', 0.0, 4.0, 0.1);
     this.gui.add(this.params, 'greyMatterOpacity', 0.0, 1.0, 0.01);
 
+    this.camera = new AnimCamera(this);
     this.camera.position.set(0, 5, -30);
+
     this.scene.background = new THREE.Color(0xa0a0a0);
 
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
-
-    // const light = new THREE.PointLight(0xffaaaa, 2, 100, 1);
-    // light.position.set(0, 0, -5);
-    // this.stage.scene.add(light);
-
-    // const light2 = new THREE.PointLight(0xaaaaff, 2, 100, 1);
-    // light2.position.set(0, 0, 5);
-    // this.stage.scene.add(light2);
 
     this.directionalLight = new THREE.DirectionalLight(
       0xffffff,
@@ -87,7 +82,6 @@ export default class BrainOneScene extends SceneThree {
     this.brain = new BrainOne();
     await this.brain.init();
     this.brain.model.position.y += -10;
-    console.log(this.brain.model);
 
     this.arteryMaterial = this.brain.model.getObjectByName(
       'Anterior_Cerebral_Artery'
@@ -191,13 +185,15 @@ export default class BrainOneScene extends SceneThree {
     const tracks = [positionKF];
     const length = -1;
     const clip = new THREE.AnimationClip('slowmove', length, tracks);
+    console.log(this.camera.animation.mixer);
     this.camera.animation.actions.slowmove =
-      this.camera.animation.mixer.clipAction(clip);
+      await this.camera.animation.mixer.clipAction(clip);
     this.camera.animation.play('slowmove');
   }
 
   update(time) {
     super.update(time);
+    this.camera.animation.mixer.update(this.time.delta * 0.001);
     this.directionalLight.intensity = this.params.lightIntensity;
     if (this.greyMatter) {
       this.greyMatter.material.opacity = this.params.greyMatterOpacity;
