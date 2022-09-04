@@ -14,7 +14,9 @@ export default class AnimCamera extends THREE.PerspectiveCamera {
       const oldAction = this.animation.actions.current;
       newAction.reset();
       newAction.play();
-      newAction.crossFadeFrom(oldAction, 1);
+      if (oldAction) {
+        newAction.crossFadeFrom(oldAction, 1);
+      }
 
       this.animation.actions.current = newAction;
     };

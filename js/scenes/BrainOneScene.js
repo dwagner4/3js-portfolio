@@ -10,6 +10,8 @@ import BrainOne from '../actors/BrainOne.js';
 import BrainClot from '../actors/brainclot.js';
 // import MySphere from '../props/MySphere.js';
 import { brainService } from './brainMachine.js';
+// eslint-disable-next-line no-unused-vars
+import { initBrainActions, initCameraActions } from './brainactions.js';
 
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
@@ -32,8 +34,17 @@ export default class BrainOneScene extends SceneThree {
       brainService.send({ type: 'REWIND' });
     };
 
+    brainService.subscribe(state => {
+      if (state.value === 'rotate') {
+        this.camera.animation.play('slowmove');
+        // this.camera.animation.play('target');
+      }
+    });
+
     this.camera = new AnimCamera(this);
     this.camera.position.set(0, 5, -30);
+    this.camera.rotation.set(-3, 1.2, 3.14);
+    console.log(this.camera.rotation);
 
     this.scene.background = new THREE.Color(0xa0a0a0);
 
@@ -74,24 +85,15 @@ export default class BrainOneScene extends SceneThree {
     this.brainClot.lesion.rotateX(Math.PI / 20);
     this.scene.add(this.brainClot.lesion);
 
-    const times = [0, 3];
-    const values = [0, 5, -30, 0, 1, -10];
-    const positionKF = new THREE.VectorKeyframeTrack(
-      '.position',
-      times,
-      values
+    this.camera.animation.actions = initCameraActions(
+      this.camera.animation.mixer
     );
-    const tracks = [positionKF];
-    const length = -1;
-    const clip = new THREE.AnimationClip('slowmove', length, tracks);
-    console.log(this.camera.animation.mixer);
-    this.camera.animation.actions.slowmove =
-      await this.camera.animation.mixer.clipAction(clip);
-    this.camera.animation.play('slowmove');
+    // this.camera.animation.play('slowmove');
   }
 
   update(time) {
     super.update(time);
+    // console.log(this.camera.rotation)
     this.camera.animation.mixer.update(this.time.delta * 0.001);
   }
 
