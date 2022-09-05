@@ -1,19 +1,13 @@
 /* eslint-disable class-methods-use-this */
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export default class Actor {
-  constructor() {
-    this.model = null;
-    this.body = null;
+export default class AnimCamera extends OrbitControls {
+  constructor(camera, canvas) {
+    super(camera, canvas);
+    this.enableDamping = true;
+
     this.animation = {};
-    this.audio = {};
-  }
-
-  async init() {
-    /** load the model */
-
-    /** make AnimationClips and AnimationActions */
-
     this.animation.mixer = new THREE.AnimationMixer(this);
     this.animation.actions = {};
 
@@ -29,8 +23,6 @@ export default class Actor {
       this.animation.actions.current = newAction;
     };
   }
-
-  setBody() {}
 
   update(time) {
     this.animation.mixer?.update(time.delta * 0.001);

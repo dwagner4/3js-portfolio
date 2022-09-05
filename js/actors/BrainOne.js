@@ -6,6 +6,8 @@ export default class BrainOne extends Actor {
   constructor() {
     super();
     this.model = {};
+
+    this.greyopacity = 1.0;
   }
 
   async init() {
@@ -17,6 +19,7 @@ export default class BrainOne extends Actor {
     const brainmodel = brainData.scene;
     // eslint-disable-next-line prefer-destructuring
     this.model = brainmodel.children[0];
+    this.model.name = 'brain';
     this.Anterior_Cerebral_Artery = this.model.getObjectByName(
       'Anterior_Cerebral_Artery'
     );
@@ -76,6 +79,14 @@ export default class BrainOne extends Actor {
     this.Vertebral_Artery.material = new THREE.MeshStandardMaterial({
       color: 0x660000,
     });
+    this.greyMatter = this.model.getObjectByName('Brain');
+    this.greyMatter.material.transparent = true;
+    this.greyMatter.material.opacity = this.greyopacity;
+  }
+
+  update(time) {
+    super.update(time);
+    this.greyMatter.material.opacity = this.greyopacity;
   }
 
   // eslint-disable-next-line class-methods-use-this

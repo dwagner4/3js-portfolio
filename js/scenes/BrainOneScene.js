@@ -1,8 +1,9 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // import * as dat from 'lil-gui';
 import SceneThree from '../systems/SceneThree.js';
 import AnimCamera from '../systems/AnimCamera.js';
+import AnimOrbitControl from '../systems/AnimOrbitControl.js';
 
 // import HeartScenery from '../scenery/HeartScenery.js';
 
@@ -11,11 +12,26 @@ import BrainClot from '../actors/brainclot.js';
 // import MySphere from '../props/MySphere.js';
 import { brainService } from './brainMachine.js';
 // eslint-disable-next-line no-unused-vars
-import { initBrainActions, initCameraActions } from './brainactions.js';
+import {
+  initBrainActions,
+  initCameraActions,
+  initControlActions,
+} from './brainactions.js';
 
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
     super(canvasId);
+
+    const pgeometry = new THREE.CircleGeometry(1000, 32);
+    const pmaterial = new THREE.MeshStandardMaterial({
+      color: 0x336633,
+      side: THREE.DoubleSide,
+    });
+    this.plane = new THREE.Mesh(pgeometry, pmaterial);
+    this.plane.rotateX(-Math.PI / 2);
+    this.plane.translateZ(-1);
+    this.plane.receiveShadow = true;
+    this.scene.add(this.plane);
 
     const resetbtn = document.querySelector('#resetbtn');
     resetbtn.onclick = () => {
@@ -37,19 +53,22 @@ export default class BrainOneScene extends SceneThree {
     brainService.subscribe(state => {
       if (state.value === 'rotate') {
         this.camera.animation.play('slowmove');
-        // this.camera.animation.play('target');
+        this.controls.animation.play('target');
+        this.brain.animation.play('grey');
       }
     });
 
     this.camera = new AnimCamera(this);
     this.camera.position.set(0, 5, -30);
-    this.camera.rotation.set(-3, 1.2, 3.14);
-    console.log(this.camera.rotation);
+    // this.camera.rotation.set(-3, 0, 3.14);
+    // console.log(this.camera.rotation);
 
     this.scene.background = new THREE.Color(0xa0a0a0);
 
-    this.controls = new OrbitControls(this.camera, this.canvas);
-    this.controls.enableDamping = true;
+    this.camera = new AnimCamera(this.canvas);
+
+    this.controls = new AnimOrbitControl(this.camera, this.canvas);
+    // this.controls.enableDamping = true;
 
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
     this.directionalLight.position.set(3, 3, 0);
@@ -70,10 +89,11 @@ export default class BrainOneScene extends SceneThree {
     this.brain = new BrainOne();
     await this.brain.init();
     this.brain.model.position.y += -10;
+    this.objectsToUpdate.push(this.brain);
 
-    this.greyMatter = this.brain.model.getObjectByName('Brain');
-    this.greyMatter.material.transparent = true;
-    this.greyMatter.material.opacity = 0.1;
+    // this.greyMatter = this.brain.model.getObjectByName('Brain');
+    // this.greyMatter.material.transparent = true;
+    // this.greyMatter.material.opacity = 0.1;
     // this.greyMatter.material.wireframe = true
 
     this.scene.add(this.brain.model);
@@ -85,8 +105,12 @@ export default class BrainOneScene extends SceneThree {
     this.brainClot.lesion.rotateX(Math.PI / 20);
     this.scene.add(this.brainClot.lesion);
 
-    this.camera.animation.actions = initCameraActions(
-      this.camera.animation.mixer
+    this.controls.animation.actions = initCameraActions(
+      this.controls.animation.mixer
+    );
+    this.brain.animation.actions = initBrainActions(this.brain.animation.mixer);
+    this.controls.animation.actions = initControlActions(
+      this.controls.animation.mixer
     );
     // this.camera.animation.play('slowmove');
   }
@@ -94,7 +118,10 @@ export default class BrainOneScene extends SceneThree {
   update(time) {
     super.update(time);
     // console.log(this.camera.rotation)
+    // console.log(this.controls.target)
+    this.controls.animation.mixer.update(this.time.delta * 0.001);
     this.camera.animation.mixer.update(this.time.delta * 0.001);
+    this.brain.animation.mixer.update(this.time.delta * 0.001);
   }
 
   dispose() {
