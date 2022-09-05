@@ -4,7 +4,7 @@ const initControlActions = mixer => {
   const controlactions = {};
 
   const targettimes = [0, 3];
-  const targetvalues = [0, 0, 0, 0, -10, 0];
+  const targetvalues = [0, 0, 0, -2.25, -8, -0.1];
   const targetKF = new THREE.VectorKeyframeTrack(
     '.target',
     targettimes,
@@ -28,7 +28,7 @@ const initCameraActions = mixer => {
   const cameraactions = {};
 
   const slowmovetimes = [0, 3];
-  const slowmovevalues = [0, 5, -30, 0, 5, -10];
+  const slowmovevalues = [0, 5, -30, 0, -10, -10];
   const positionKF = new THREE.VectorKeyframeTrack(
     '.position',
     slowmovetimes,
