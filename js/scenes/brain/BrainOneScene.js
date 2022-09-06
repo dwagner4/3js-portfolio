@@ -1,22 +1,13 @@
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-// import * as dat from 'lil-gui';
-import SceneThree from '../systems/SceneThree.js';
-import AnimCamera from '../systems/AnimCamera.js';
-import AnimOrbitControl from '../systems/AnimOrbitControl.js';
+import SceneThree from '../../systems/SceneThree.js';
+import AnimCamera from '../../systems/AnimCamera.js';
+import AnimOrbitControl from '../../systems/AnimOrbitControl.js';
 
-// import HeartScenery from '../scenery/HeartScenery.js';
-
-import BrainOne from '../actors/BrainOne.js';
-import BrainClot from '../actors/brainclot.js';
-// import MySphere from '../props/MySphere.js';
+import BrainOne from '../../actors/brain/BrainOne.js';
+import BrainClot from '../../actors/brain/brainclot.js';
 import { brainService } from './brainMachine.js';
-// eslint-disable-next-line no-unused-vars
-import {
-  initBrainActions,
-  initCameraActions,
-  initControlActions,
-} from './brainactions.js';
+
+import { initCameraActions, initControlActions } from './brainsceneactions.js';
 
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
@@ -87,7 +78,6 @@ export default class BrainOneScene extends SceneThree {
     this.camera.animation.actions = initCameraActions(
       this.camera.animation.mixer
     );
-    this.brain.animation.actions = initBrainActions(this.brain.animation.mixer);
     this.controls.animation.actions = initControlActions(
       this.controls.animation.mixer
     );
@@ -97,7 +87,6 @@ export default class BrainOneScene extends SceneThree {
     super.update(time);
     this.controls.animation.mixer.update(this.time.delta * 0.001);
     this.camera.animation.mixer.update(this.time.delta * 0.001);
-    this.brain.animation.mixer.update(this.time.delta * 0.001);
   }
 
   dispose() {

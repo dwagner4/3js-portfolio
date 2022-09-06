@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Actor from '../systems/Actor.js';
+import Actor from '../../systems/Actor.js';
 
 export default class BrianClot extends Actor {
   constructor() {

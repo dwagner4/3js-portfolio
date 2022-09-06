@@ -161,7 +161,7 @@ mainService.subscribe(state => {
     if (stateStr === 'brain') {
       // const container = document.querySelector('#scene-container');
       console.log('AAA');
-      import('./scenes/BrainOneScene.js').then(module => {
+      import('./scenes/brain/BrainOneScene.js').then(module => {
         const stage = new module.default('scene-container');
         stage.init();
         stage.start();

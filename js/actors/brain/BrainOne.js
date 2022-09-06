@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import Actor from '../systems/Actor.js';
-import { createGlbLoader } from '../systems/Loader.js';
+import Actor from '../../systems/Actor.js';
+import { createGlbLoader } from '../../systems/Loader.js';
+import { initBrainActions } from './brainactions.js';
 
 export default class BrainOne extends Actor {
   constructor() {
@@ -82,6 +83,8 @@ export default class BrainOne extends Actor {
     this.greyMatter = this.model.getObjectByName('Brain');
     this.greyMatter.material.transparent = true;
     this.greyMatter.material.opacity = this.greyopacity;
+
+    this.animation.actions = initBrainActions(this.animation.mixer);
   }
 
   update(time) {
