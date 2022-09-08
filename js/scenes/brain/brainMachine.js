@@ -9,13 +9,6 @@ const brainMachine = createMachine({
     home: {
       entry: [],
       on: {
-        NEXT: { target: 'rotate' },
-      },
-    },
-    rotate: {
-      entry: [],
-      on: {
-        HOME: { target: 'home' },
         NEXT: { target: 'lesion' },
       },
     },
@@ -23,7 +16,21 @@ const brainMachine = createMachine({
       entry: [],
       on: {
         HOME: { target: 'home' },
-        NEXT: { target: 'stroke' },
+        NEXT: { target: 'breakoff' },
+      },
+    },
+    breakoff: {
+      entry: [],
+      on: {
+        HOME: { target: 'home' },
+        NEXT: { target: 'travel' },
+      },
+    },
+    travel: {
+      entry: [],
+      on: {
+        HOME: { target: 'home' },
+        NEXT: { target: 'depletion' },
       },
     },
     stroke: {
@@ -34,6 +41,7 @@ const brainMachine = createMachine({
       },
     },
     depletion: {
+      // the stroke starts
       entry: [],
       on: {
         HOME: { target: 'home' },
@@ -66,7 +74,7 @@ const brainMachine = createMachine({
 });
 
 const brainService = interpret(brainMachine);
-brainService.onTransition(state => console.log(state));
+brainService.onTransition(state => console.log(state.value));
 brainService.start();
 
 export { brainMachine, brainService };

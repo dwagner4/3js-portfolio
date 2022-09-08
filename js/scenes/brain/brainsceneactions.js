@@ -4,7 +4,7 @@ const initControlActions = mixer => {
   const controlactions = {};
 
   const targettimes = [0, 3];
-  const targetvalues = [0, 0, 0, -2.25, -8, -0.1];
+  const targetvalues = [0, 0.1, 0, -2.25, -8, -0.1];
   const targetKF = new THREE.VectorKeyframeTrack(
     '.target',
     targettimes,

@@ -1,3 +1,4 @@
+// import gsap from 'gsap'
 import * as THREE from 'three';
 import SceneThree from '../../systems/SceneThree.js';
 import AnimCamera from '../../systems/AnimCamera.js';
@@ -30,10 +31,13 @@ export default class BrainOneScene extends SceneThree {
       brainService.send({ type: 'REWIND' });
     };
 
+    // this.params = { clotglow: 0 }
+
     brainService.subscribe(state => {
-      if (state.value === 'rotate') {
+      if (state.value === 'lesion') {
         this.camera.animation.play('slowmove');
         this.controls.animation.play('target');
+        this.controls.autoRotate = false;
         this.brain.animation.play('grey');
       }
     });
@@ -41,7 +45,7 @@ export default class BrainOneScene extends SceneThree {
     this.camera = new AnimCamera(this);
     this.camera.position.set(0, 5, -30);
 
-    this.scene.background = new THREE.Color(0xa0a0a0);
+    this.scene.background = new THREE.Color(0x303030);
 
     this.controls = new AnimOrbitControl(this.camera, this.canvas);
 
@@ -60,7 +64,7 @@ export default class BrainOneScene extends SceneThree {
   async init() {
     await super.init();
 
-    this.controls.target = new THREE.Vector3(0, 0.05, 0);
+    this.controls.target = new THREE.Vector3(0, 0.1, 0);
     this.brain = new BrainOne();
     await this.brain.init();
     this.brain.model.position.y += -10;
@@ -74,6 +78,13 @@ export default class BrainOneScene extends SceneThree {
     this.brainClot.lesion.position.set(-2.25, -8, -0.1);
     this.brainClot.lesion.rotateX(Math.PI / 20);
     this.scene.add(this.brainClot.lesion);
+    this.objectsToUpdate.push(this.brainClot);
+
+    // gsap.to(this.params, {
+    //   clotglow: 1.0,
+    //   duration: 5,
+    //   repeat: -1
+    // }).play(true)
 
     this.camera.animation.actions = initCameraActions(
       this.camera.animation.mixer
@@ -81,10 +92,13 @@ export default class BrainOneScene extends SceneThree {
     this.controls.animation.actions = initControlActions(
       this.controls.animation.mixer
     );
+    this.controls.autoRotate = true;
   }
 
   update(time) {
     super.update(time);
+    // this.brainClot.clotmaterial.emissiveIntensity = this.params.clotglow;
+    // console.log(this.brainClot.clotmaterial)
     this.controls.animation.mixer.update(this.time.delta * 0.001);
     this.camera.animation.mixer.update(this.time.delta * 0.001);
   }

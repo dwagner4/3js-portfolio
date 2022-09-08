@@ -52,6 +52,7 @@ export default class BrainOne extends Actor {
       color: 0x660000,
       transparent: true,
       opacity: 0.5,
+      // wireframe: true
     });
     this.Middle_Cerebral_Artery = this.model.getObjectByName(
       'Middle_Cerebral_Artery'
