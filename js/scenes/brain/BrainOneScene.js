@@ -35,7 +35,7 @@ export default class BrainOneScene extends SceneThree {
     this.animprops = {
       cameraDistance: 30,
       camPosX: 0,
-      camPosY: 0,
+      camPosY: -3,
       camPosZ: 0,
       cameraHeight: 3,
     };
@@ -46,7 +46,7 @@ export default class BrainOneScene extends SceneThree {
       }
       if (state.value === 'lesion') {
         this.cameraRotate = false;
-        this.goFront.play();
+        this.goFront.play(true);
       }
     });
 
@@ -94,10 +94,10 @@ export default class BrainOneScene extends SceneThree {
 
     this.goFront = gsap.to(this.animprops, {
       camPosX: 0,
-      camPosY: 5,
-      camPosZ: -30,
+      camPosY: -3,
+      camPosZ: -10,
       duration: 3,
-      repeat: 1,
+      // repeat: 1,
     });
 
     // gsap.to(this.params, {
@@ -128,20 +128,23 @@ export default class BrainOneScene extends SceneThree {
       this.animprops.camPosY = this.animprops.cameraHeight;
       this.animprops.camPosZ =
         Math.cos(this.time.current * 0.001) * this.animprops.cameraDistance;
-
-      if (
-        this.stoprotating &&
-        this.animprops.camPosX < 1 &&
-        this.animprops.camPosZ < -25
-      ) {
-        brainService.send({ type: 'ATZERO' });
-      }
+    }
+    if (
+      this.stoprotating &&
+      this.animprops.camPosX < 1 &&
+      this.animprops.camPosZ < -25
+    ) {
+      this.cameraRotate = false;
+      console.log(this.animprops.camPosY);
+      brainService.send({ type: 'ATZERO' });
+      console.log(this.animprops.camPosY);
     }
     this.camera.position.set(
       this.animprops.camPosX,
       this.animprops.camPosY,
       this.animprops.camPosZ
     );
+    // console.log(this.animprops.camPosY)
     this.camera.lookAt(0, 0, 0);
     // console.log(this.time)
   }
