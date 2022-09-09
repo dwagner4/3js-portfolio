@@ -9,7 +9,15 @@ const brainMachine = createMachine({
     home: {
       entry: [],
       on: {
-        NEXT: { target: 'lesion' },
+        NEXT: { target: 'stoprotating' },
+      },
+    },
+    stoprotating: {
+      entry: [],
+      on: {
+        HOME: { target: 'home' },
+        // NEXT: { target: 'breakoff' },
+        ATZERO: { target: 'lesion' },
       },
     },
     lesion: {

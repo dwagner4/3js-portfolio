@@ -41,6 +41,9 @@ export default class BrainOneScene extends SceneThree {
     };
 
     brainService.subscribe(state => {
+      if (state.value === 'stoprotating') {
+        this.stoprotating = true;
+      }
       if (state.value === 'lesion') {
         this.cameraRotate = false;
         this.goFront.play();
@@ -52,6 +55,7 @@ export default class BrainOneScene extends SceneThree {
     this.cameraDistance = 30;
     this.cameraHeight = 3;
     this.cameraRotate = true;
+    this.stoprotating = false;
 
     this.scene.background = new THREE.Color(0x303030);
 
@@ -92,7 +96,7 @@ export default class BrainOneScene extends SceneThree {
       camPosX: 0,
       camPosY: 5,
       camPosZ: -30,
-      duration: 5,
+      duration: 3,
       repeat: 1,
     });
 
@@ -120,10 +124,18 @@ export default class BrainOneScene extends SceneThree {
     // this.camera.lookAt(0,0,0)
     if (this.cameraRotate) {
       this.animprops.camPosX =
-        Math.sin(this.time.current * 0.0005) * this.animprops.cameraDistance;
+        Math.sin(this.time.current * 0.001) * this.animprops.cameraDistance;
       this.animprops.camPosY = this.animprops.cameraHeight;
       this.animprops.camPosZ =
-        Math.cos(this.time.current * 0.0005) * this.animprops.cameraDistance;
+        Math.cos(this.time.current * 0.001) * this.animprops.cameraDistance;
+
+      if (
+        this.stoprotating &&
+        this.animprops.camPosX < 1 &&
+        this.animprops.camPosZ < -25
+      ) {
+        brainService.send({ type: 'ATZERO' });
+      }
     }
     this.camera.position.set(
       this.animprops.camPosX,
@@ -135,6 +147,7 @@ export default class BrainOneScene extends SceneThree {
   }
 
   dispose() {
+    brainService.send({ type: 'HOME' });
     this.stage.disableVR();
     this.brain.dispose();
     this.brain.model.removeFromParent();
