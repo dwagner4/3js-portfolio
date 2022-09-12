@@ -41,6 +41,7 @@ export default class BrainOneScene extends SceneThree {
     this.stoprotating = false;
     this.pause = true;
     this.cameraLookAt = { x: 0, y: 0, z: 0 };
+    this.brainprops = { opacity: 1.0 };
 
     this.camera.lookAt(
       this.cameraLookAt.x,
@@ -52,6 +53,10 @@ export default class BrainOneScene extends SceneThree {
       gsap
         .timeline()
         // .set(this.camera.position, {z: -30, duration: 1})
+        .to(this.brain, {
+          greyopacity: 0.1,
+          duration: 2,
+        })
         .to(this.camera.position, {
           x: -10,
           y: -5.5,
@@ -64,6 +69,16 @@ export default class BrainOneScene extends SceneThree {
             x: -2.25,
             y: -8,
             z: 0,
+            duration: 5,
+          },
+          '<'
+        )
+        .to(
+          this.scene.background,
+          {
+            r: 1,
+            g: 0.9,
+            b: 0.8,
             duration: 5,
           },
           '<'
