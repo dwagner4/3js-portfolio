@@ -1,15 +1,11 @@
 import gsap from 'gsap';
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
 import SceneThree from '../../systems/SceneThree.js';
-// import AnimCamera from '../../systems/AnimCamera.js';
-// import AnimOrbitControl from '../../systems/AnimOrbitControl.js';
 
 import BrainOne from '../../actors/brain/BrainOne.js';
 import BrainClot from '../../actors/brain/brainclot.js';
 import { brainService } from './brainMachine.js';
-
-// import { initCameraActions, initControlActions } from './brainsceneactions.js';
 
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
@@ -32,13 +28,63 @@ export default class BrainOneScene extends SceneThree {
       brainService.send({ type: 'REWIND' });
     };
 
-    this.animprops = {
-      cameraDistance: 30,
-      camPosX: 0,
-      camPosY: -3,
-      camPosZ: 0,
-      cameraHeight: 3,
-    };
+    console.log('A');
+    this.camera.position.set(0, 3, 30);
+
+    this.cameraDistance = 30;
+    this.cameraHeight = 3;
+    this.cameraRotate = true;
+    this.stoprotating = false;
+    this.pause = true;
+    this.cameraLookAt = { x: 0, y: 0, z: 0 };
+
+    this.camera.lookAt(
+      this.cameraLookAt.x,
+      this.cameraLookAt.y,
+      this.cameraLookAt.z
+    );
+
+    this.cameraPanToLesion = () =>
+      gsap
+        .timeline()
+        // .set(this.camera.position, {z: -30, duration: 1})
+        .to(this.camera.position, {
+          x: -10,
+          y: -5.5,
+          z: -10,
+          duration: 5,
+        })
+        .to(
+          this.cameraLookAt,
+          {
+            x: -2.25,
+            y: -8,
+            z: 0,
+            onUpdate: () => {
+              this.camera.lookAt(
+                this.cameraLookAt.x,
+                this.cameraLookAt.y,
+                this.cameraLookAt.z
+              );
+            },
+            duration: 5,
+          },
+          '<'
+        );
+
+    // this.toLesionTL = () => gsap.timeline(
+    //   this.camera.position,
+    //   {
+    //     z: -30,
+    //     ease: "none",
+    //     duration: 2
+    //   }
+    // )
+
+    // this.animprops = {
+    //   cameraDistance: 30,
+    //   cameraHeight: 3,
+    // };
 
     brainService.subscribe(state => {
       resetbtn.style.display = state.context.resetbtn;
@@ -48,27 +94,30 @@ export default class BrainOneScene extends SceneThree {
       if (state.value === 'home') {
         this.cameraRotate = true;
         this.stoprotating = false;
-        this.animprops.cameraDistance = 30;
+        this.cameraDistance = 30;
       }
       if (state.value === 'stoprotating') {
         this.stoprotating = true;
       }
       if (state.value === 'lesion') {
-        this.cameraRotate = false;
-        // this.goFront.play(true);
+        if (!gsap.isTweening(this.camera.position)) {
+          this.cameraRotate = false;
+          this.cameraPanToLesion().play();
+          // gsap.fromTo(
+          //   this.camera.position,
+          //   { z: -30},
+          //   {
+          //     z: -100,
+          //     onUpdate: () => {console.log(this.camera.position.z)},
+          //     duration: 5,
+          //     ease: "none",
+          //   }
+          // ).play(true);
+        }
       }
     });
 
-    // this.camera = new AnimCamera(this);
-    // this.camera.position.set(0, 5, -30);
-    this.cameraDistance = 30;
-    this.cameraHeight = 3;
-    this.cameraRotate = true;
-    this.stoprotating = false;
-
     this.scene.background = new THREE.Color(0x303030);
-
-    // this.controls = new OrbitControls(this.camera, this.canvas);
 
     this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
     this.directionalLight.position.set(3, 3, 0);
@@ -85,7 +134,6 @@ export default class BrainOneScene extends SceneThree {
   async init() {
     await super.init();
 
-    // this.controls.target = new THREE.Vector3(0, 0.1, 0);
     this.brain = new BrainOne();
     await this.brain.init();
     this.brain.model.position.y += -10;
@@ -100,61 +148,31 @@ export default class BrainOneScene extends SceneThree {
     this.brainClot.lesion.rotateX(Math.PI / 20);
     this.scene.add(this.brainClot.lesion);
     this.objectsToUpdate.push(this.brainClot);
-
-    this.goFront = gsap.to(this.animprops, {
-      camPosX: 0,
-      camPosY: -3,
-      camPosZ: -10,
-      duration: 3,
-      // repeat: 1,
-    });
-
-    // gsap.to(this.params, {
-    //   clotglow: 1.0,
-    //   duration: 5,
-    //   repeat: -1
-    // }).play(true)
-
-    // this.camera.animation.actions = initCameraActions(
-    //   this.camera.animation.mixer
-    // );
-    // this.controls.animation.actions = initControlActions(
-    //   this.controls.animation.mixer
-    // );
-    // this.controls.autoRotate = true;
   }
 
   update() {
     super.update();
-    // this.brainClot.clotmaterial.emissiveIntensity = this.params.clotglow;
-    // console.log(this.brainClot.clotmaterial)
-    // this.controls.animation.mixer.update(this.time.delta * 0.001);
-    // this.camera.animation.mixer.update(this.time.delta * 0.001);
-    // this.camera.lookAt(0,0,0)
+
     if (this.cameraRotate) {
-      this.animprops.camPosX =
-        Math.sin(this.time.current * 0.001) * this.animprops.cameraDistance;
-      this.animprops.camPosY = this.animprops.cameraHeight;
-      this.animprops.camPosZ =
-        Math.cos(this.time.current * 0.001) * this.animprops.cameraDistance;
+      this.camera.position.set(
+        Math.sin(this.time.current * 0.001) * this.cameraDistance,
+        this.cameraHeight,
+        Math.cos(this.time.current * 0.001) * this.cameraDistance
+      );
+      this.camera.lookAt(0, 0, 0);
     }
     if (
+      this.pause &&
       this.stoprotating &&
-      this.animprops.camPosX < 1 &&
-      this.animprops.camPosZ < -25
+      this.camera.position.x < 1 &&
+      this.camera.position.z < -25
     ) {
       this.cameraRotate = false;
+      this.pause = false;
       brainService.send({ type: 'ATZERO' });
     }
 
-    this.camera.position.set(
-      this.animprops.camPosX,
-      this.animprops.camPosY,
-      this.animprops.camPosZ
-    );
-    // console.log(this.animprops.camPosY)
-    this.camera.lookAt(0, 0, 0);
-    // console.log(this.time)
+    // this.camera.lookAt(0, 0, 0);
   }
 
   dispose() {
