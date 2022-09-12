@@ -41,12 +41,21 @@ export default class BrainOneScene extends SceneThree {
     };
 
     brainService.subscribe(state => {
+      resetbtn.style.display = state.context.resetbtn;
+      nextbtn.style.display = state.context.nextbtn;
+      drugbtn.style.display = state.context.drugbtn;
+      rewindbtn.style.display = state.context.rewindbtn;
+      if (state.value === 'home') {
+        this.cameraRotate = true;
+        this.stoprotating = false;
+        this.animprops.cameraDistance = 30;
+      }
       if (state.value === 'stoprotating') {
         this.stoprotating = true;
       }
       if (state.value === 'lesion') {
         this.cameraRotate = false;
-        this.goFront.play(true);
+        // this.goFront.play(true);
       }
     });
 
@@ -135,10 +144,9 @@ export default class BrainOneScene extends SceneThree {
       this.animprops.camPosZ < -25
     ) {
       this.cameraRotate = false;
-      console.log(this.animprops.camPosY);
       brainService.send({ type: 'ATZERO' });
-      console.log(this.animprops.camPosY);
     }
+
     this.camera.position.set(
       this.animprops.camPosX,
       this.animprops.camPosY,
