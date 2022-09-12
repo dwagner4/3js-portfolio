@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import SceneThree from '../../systems/SceneThree.js';
 
@@ -10,6 +11,9 @@ import { brainService } from './brainMachine.js';
 export default class BrainOneScene extends SceneThree {
   constructor(canvasId) {
     super(canvasId);
+
+    this.controls = new OrbitControls(this.camera, this.canvas);
+    this.controls.enableDamping = true;
 
     const resetbtn = document.querySelector('#resetbtn');
     resetbtn.onclick = () => {
@@ -55,18 +59,11 @@ export default class BrainOneScene extends SceneThree {
           duration: 5,
         })
         .to(
-          this.cameraLookAt,
+          this.controls.target,
           {
             x: -2.25,
             y: -8,
             z: 0,
-            onUpdate: () => {
-              this.camera.lookAt(
-                this.cameraLookAt.x,
-                this.cameraLookAt.y,
-                this.cameraLookAt.z
-              );
-            },
             duration: 5,
           },
           '<'
