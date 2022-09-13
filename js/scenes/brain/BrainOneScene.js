@@ -83,13 +83,104 @@ export default class BrainOneScene extends SceneThree {
             duration: 5,
           },
           '<'
-        );
+        )
+        // .to(this.brain, { aOneTrans: true , duration: 1})
+        .to(this.brain, {
+          arteryOneOpacity: 0.3,
+          duration: 2,
+        });
 
     this.dobreakoff = () =>
-      gsap.timeline().to(this.brainClot.model.position, {
-        y: 20,
-        duration: 10,
-      });
+      gsap
+        .timeline()
+        .to(this.brainClot.model.position, {
+          x: -2.1,
+          y: -7.5,
+          z: -0.3,
+          duration: 5,
+        })
+        .to(this.brainClot.model.position, {
+          x: -2.4,
+          y: -5.2,
+          z: -0.7,
+          duration: 5,
+        })
+        .to(this.brainClot.model.position, {
+          x: -1,
+          y: -4.1,
+          z: -1.1,
+          duration: 5,
+        })
+        .to(
+          this.camera.position,
+          {
+            x: -3,
+            y: -10.8,
+            z: -13.6,
+            duration: 8,
+          },
+          '<'
+        )
+        .to(
+          this.controls.target,
+          {
+            x: 0.7,
+            y: -7.2,
+            z: -1.8,
+            duration: 8,
+          },
+          '<'
+        )
+        .to(this.brainClot.model.position, {
+          x: -1,
+          y: -3.5,
+          z: -1.0,
+          duration: 5,
+        })
+        .to(this.brainClot.model.position, {
+          x: -1.1,
+          y: -2.4,
+          z: -2.2,
+          duration: 5,
+        });
+
+    this.dotravel = () =>
+      gsap
+        .timeline()
+        .to(this.brain, {
+          arteryOneOpacity: 1.0,
+          duration: 1,
+        })
+        // .to(this.brainClot.model.position, {
+        //   x: -2.1,
+        //   y: -7.5,
+        //   z: 0.36,
+        //   duration: 5,
+        // })
+        .to(this.brain, {
+          greyopacity: 0.1,
+          duration: 2,
+        })
+        .to(this.camera.position, {
+          x: -20.2,
+          y: -0.25,
+          z: 0.36,
+          duration: 5,
+        })
+        .to(
+          this.controls.target,
+          {
+            x: -2.72,
+            y: 0.6,
+            z: 0.6,
+            duration: 5,
+          },
+          '<'
+        )
+        .to(this.brain, {
+          arteryTwoOpacity: 0.5,
+          duration: 2,
+        });
 
     brainService.subscribe(state => {
       resetbtn.style.display = state.context.resetbtn;
@@ -105,15 +196,14 @@ export default class BrainOneScene extends SceneThree {
         this.stoprotating = true;
       }
       if (state.value === 'plaque') {
-        if (!gsap.isTweening(this.camera.position)) {
-          this.cameraRotate = false;
-          this.cameraPanToplaque().play();
-        }
+        this.cameraRotate = false;
+        this.cameraPanToplaque().play();
       }
       if (state.value === 'breakoff') {
-        if (!gsap.isTweening(this.brainClot.model.position)) {
-          this.dobreakoff().play();
-        }
+        this.dobreakoff().play();
+      }
+      if (state.value === 'travel') {
+        this.dotravel().play();
       }
     });
 
@@ -177,7 +267,7 @@ export default class BrainOneScene extends SceneThree {
       this.pause = false;
       brainService.send({ type: 'ATZERO' });
     }
-
+    console.log('pos:', this.camera.position, 'target:', this.controls.target);
     // this.camera.lookAt(0, 0, 0);
   }
 
