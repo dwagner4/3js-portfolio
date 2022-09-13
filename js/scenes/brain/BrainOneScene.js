@@ -76,27 +76,19 @@ export default class BrainOneScene extends SceneThree {
         .to(
           this.scene.background,
           {
-            r: 1,
-            g: 0.9,
+            r: 0.6,
+            g: 0.7,
             b: 0.8,
             duration: 5,
           },
           '<'
         );
 
-    // this.toLesionTL = () => gsap.timeline(
-    //   this.camera.position,
-    //   {
-    //     z: -30,
-    //     ease: "none",
-    //     duration: 2
-    //   }
-    // )
-
-    // this.animprops = {
-    //   cameraDistance: 30,
-    //   cameraHeight: 3,
-    // };
+    this.dobreakoff = () =>
+      gsap.timeline().to(this.brainClot.lesion.position, {
+        y: 20,
+        duration: 10,
+      });
 
     brainService.subscribe(state => {
       resetbtn.style.display = state.context.resetbtn;
@@ -115,16 +107,11 @@ export default class BrainOneScene extends SceneThree {
         if (!gsap.isTweening(this.camera.position)) {
           this.cameraRotate = false;
           this.cameraPanToLesion().play();
-          // gsap.fromTo(
-          //   this.camera.position,
-          //   { z: -30},
-          //   {
-          //     z: -100,
-          //     onUpdate: () => {console.log(this.camera.position.z)},
-          //     duration: 5,
-          //     ease: "none",
-          //   }
-          // ).play(true);
+        }
+      }
+      if (state.value === 'breakoff') {
+        if (!gsap.isTweening(this.brainClot.lesion.position)) {
+          this.dobreakoff().play();
         }
       }
     });
