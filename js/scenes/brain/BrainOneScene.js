@@ -6,6 +6,7 @@ import SceneThree from '../../systems/SceneThree.js';
 
 import BrainOne from '../../actors/brain/BrainOne.js';
 import BrainClot from '../../actors/brain/brainclot.js';
+import BrainPlaque from '../../actors/brain/brainPlaque.js';
 import { brainService } from './brainMachine.js';
 
 export default class BrainOneScene extends SceneThree {
@@ -49,7 +50,7 @@ export default class BrainOneScene extends SceneThree {
       this.cameraLookAt.z
     );
 
-    this.cameraPanToLesion = () =>
+    this.cameraPanToplaque = () =>
       gsap
         .timeline()
         // .set(this.camera.position, {z: -30, duration: 1})
@@ -85,7 +86,7 @@ export default class BrainOneScene extends SceneThree {
         );
 
     this.dobreakoff = () =>
-      gsap.timeline().to(this.brainClot.lesion.position, {
+      gsap.timeline().to(this.brainClot.model.position, {
         y: 20,
         duration: 10,
       });
@@ -103,14 +104,14 @@ export default class BrainOneScene extends SceneThree {
       if (state.value === 'stoprotating') {
         this.stoprotating = true;
       }
-      if (state.value === 'lesion') {
+      if (state.value === 'plaque') {
         if (!gsap.isTweening(this.camera.position)) {
           this.cameraRotate = false;
-          this.cameraPanToLesion().play();
+          this.cameraPanToplaque().play();
         }
       }
       if (state.value === 'breakoff') {
-        if (!gsap.isTweening(this.brainClot.lesion.position)) {
+        if (!gsap.isTweening(this.brainClot.model.position)) {
           this.dobreakoff().play();
         }
       }
@@ -142,11 +143,17 @@ export default class BrainOneScene extends SceneThree {
 
     this.brainClot = new BrainClot();
     this.brainClot.init();
-    this.brainClot.lesion.rotateY(Math.PI);
-    this.brainClot.lesion.position.set(-2.25, -8, -0.1);
-    this.brainClot.lesion.rotateX(Math.PI / 20);
-    this.scene.add(this.brainClot.lesion);
+    this.scene.add(this.brainClot.model);
+    this.brainClot.model.position.set(-2.25, -8, -0.1);
     this.objectsToUpdate.push(this.brainClot);
+
+    this.brainplaque = new BrainPlaque();
+    this.brainplaque.init();
+    this.brainplaque.model.rotateY(Math.PI);
+    this.brainplaque.model.position.set(-2.25, -8, -0.1);
+    this.brainplaque.model.rotateX(Math.PI / 20);
+    this.scene.add(this.brainplaque.model);
+    // this.objectsToUpdate.push(this.brainClot);
   }
 
   update() {

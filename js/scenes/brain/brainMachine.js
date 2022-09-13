@@ -16,10 +16,10 @@ const brainMachine = createMachine(
       stoprotating: {
         entry: ['selectrotate'],
         on: {
-          ATZERO: { target: 'lesion' },
+          ATZERO: { target: 'plaque' },
         },
       },
-      lesion: {
+      plaque: {
         entry: ['selectbefore'],
         on: {
           REWIND: { target: 'home' },
@@ -29,7 +29,7 @@ const brainMachine = createMachine(
       breakoff: {
         entry: ['selectbefore'],
         on: {
-          REWIND: { target: 'lesion' },
+          REWIND: { target: 'plaque' },
           NEXT: { target: 'travel' },
         },
       },

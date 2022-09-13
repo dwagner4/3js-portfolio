@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import * as THREE from 'three';
 import Actor from '../../systems/Actor.js';
 
-export default class BrianClot extends Actor {
+export default class BrainClot extends Actor {
   constructor() {
     super();
     this.model = {};
@@ -10,21 +10,15 @@ export default class BrianClot extends Actor {
   }
 
   async init() {
-    this.lesion = new THREE.Group();
-    const geometry = new THREE.TetrahedronGeometry(0.25, 2);
-    const material = new THREE.MeshStandardMaterial({ color: 0xaaaa00 });
-    const model = new THREE.Mesh(geometry, material);
-    model.scale.set(1, 2, 0.4);
     const clotgeometry = new THREE.TetrahedronGeometry(0.1, 2);
     const clotmaterial = new THREE.MeshStandardMaterial({
       color: 0x000000,
       emissive: 0xff00ff,
       emissiveIntensity: 5.0,
     });
-    this.clot = new THREE.Mesh(clotgeometry, clotmaterial);
+    this.model = new THREE.Mesh(clotgeometry, clotmaterial);
 
-    this.clot.position.set(0, 0.4, 0.05);
-    this.lesion.add(model, this.clot);
+    // this.clot.position.set(0, 0.4, 0.05);
 
     this.throb = gsap
       .to(this.params, {
@@ -37,7 +31,7 @@ export default class BrianClot extends Actor {
 
   update(time) {
     super.update(time);
-    this.clot.material.emissiveIntensity = this.params.clotglow;
+    this.model.material.emissiveIntensity = this.params.clotglow;
   }
 
   dispose() {
