@@ -8,9 +8,9 @@ export default class BrainOne extends Actor {
     super();
     this.model = {};
 
+    // variables for animation and control in Parent Scene
     this.greyopacity = 1.0;
     this.arteryOneOpacity = 1.0;
-    this.arteryTwoOpacity = 1.0;
   }
 
   async init() {
@@ -83,7 +83,7 @@ export default class BrainOne extends Actor {
       color: 0x660000,
     });
     this.greyMatter = this.model.getObjectByName('Brain');
-    this.greyMatter.material.transparent = true;
+    this.greyMatter.material.transparent = this.greytrans;
     this.greyMatter.material.opacity = this.greyopacity;
 
     this.animation.actions = initBrainActions(this.animation.mixer);
@@ -93,7 +93,6 @@ export default class BrainOne extends Actor {
     super.update(time);
     this.greyMatter.material.opacity = this.greyopacity;
     this.Internal_Carotid_Artery.material.opacity = this.arteryOneOpacity;
-    this.Middle_Cerebral_Artery.material.opacity = this.arteryOneOpacity;
   }
 
   // eslint-disable-next-line class-methods-use-this

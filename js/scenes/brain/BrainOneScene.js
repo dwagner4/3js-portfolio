@@ -86,6 +86,7 @@ export default class BrainOneScene extends SceneThree {
         )
         // .to(this.brain, { aOneTrans: true , duration: 1})
         .to(this.brain, {
+          onStart: this.transOne,
           arteryOneOpacity: 0.3,
           duration: 2,
         });
@@ -267,7 +268,7 @@ export default class BrainOneScene extends SceneThree {
       this.pause = false;
       brainService.send({ type: 'ATZERO' });
     }
-    console.log('pos:', this.camera.position, 'target:', this.controls.target);
+    // console.log('pos:', this.camera.position, 'target:', this.controls.target);
     // this.camera.lookAt(0, 0, 0);
   }
 
