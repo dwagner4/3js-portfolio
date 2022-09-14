@@ -84,9 +84,7 @@ export default class BrainOneScene extends SceneThree {
           },
           '<'
         )
-        // .to(this.brain, { aOneTrans: true , duration: 1})
         .to(this.brain, {
-          onStart: this.transOne,
           arteryOneOpacity: 0.3,
           duration: 2,
         });
@@ -98,7 +96,7 @@ export default class BrainOneScene extends SceneThree {
           x: -2.1,
           y: -7.5,
           z: -0.3,
-          duration: 5,
+          duration: 2,
         })
         .to(this.brainClot.model.position, {
           x: -2.4,
@@ -110,7 +108,7 @@ export default class BrainOneScene extends SceneThree {
           x: -1,
           y: -4.1,
           z: -1.1,
-          duration: 5,
+          duration: 3,
         })
         .to(
           this.camera.position,
@@ -118,7 +116,7 @@ export default class BrainOneScene extends SceneThree {
             x: -3,
             y: -10.8,
             z: -13.6,
-            duration: 8,
+            duration: 4,
           },
           '<'
         )
@@ -128,7 +126,7 @@ export default class BrainOneScene extends SceneThree {
             x: 0.7,
             y: -7.2,
             z: -1.8,
-            duration: 8,
+            duration: 4,
           },
           '<'
         )
@@ -136,13 +134,13 @@ export default class BrainOneScene extends SceneThree {
           x: -1,
           y: -3.5,
           z: -1.0,
-          duration: 5,
+          duration: 2,
         })
         .to(this.brainClot.model.position, {
           x: -1.1,
           y: -2.4,
           z: -2.2,
-          duration: 5,
+          duration: 3,
         });
 
     this.dotravel = () =>
@@ -152,35 +150,125 @@ export default class BrainOneScene extends SceneThree {
           arteryOneOpacity: 1.0,
           duration: 1,
         })
-        // .to(this.brainClot.model.position, {
-        //   x: -2.1,
-        //   y: -7.5,
-        //   z: 0.36,
-        //   duration: 5,
-        // })
-        .to(this.brain, {
-          greyopacity: 0.1,
-          duration: 2,
+        .set(this.brain, {
+          aOneTrans: false,
         })
+        .to(
+          this.brain,
+          {
+            greyopacity: 1.0,
+            duration: 1,
+          },
+          '<'
+        )
         .to(this.camera.position, {
-          x: -20.2,
-          y: -0.25,
-          z: 0.36,
+          x: -1.37,
+          y: 10.38,
+          z: -13.84,
           duration: 5,
         })
         .to(
           this.controls.target,
           {
             x: -2.72,
-            y: 0.6,
-            z: 0.6,
+            y: 0.54,
+            z: 0.07,
             duration: 5,
           },
           '<'
         )
+        .to(
+          this.scene.background,
+          {
+            r: 0.8,
+            g: 0.7,
+            b: 0.6,
+            duration: 2,
+          },
+          '<'
+        )
+        .to(this.brain, {
+          greyopacity: 0.0,
+          duration: 1,
+        })
+        .set(this.brain, {
+          greyVisible: false,
+        })
+        .set(this.brain, {
+          aTwoTrans: true,
+        })
         .to(this.brain, {
           arteryTwoOpacity: 0.5,
           duration: 2,
+        })
+
+        .set(this.brainClot.model.position, {
+          x: -2.5,
+          y: -2.0,
+          z: -2.4,
+        })
+        .to(this.brainClot.model.position, {
+          x: -3.1,
+          y: -1.0,
+          z: -1.8,
+          duration: 3,
+        })
+        .to(this.brainClot.model.position, {
+          x: -3.6,
+          y: -0.9,
+          z: -1.2,
+          duration: 3,
+        })
+        .to(this.brainClot.model.position, {
+          x: -4.2,
+          y: -0.4,
+          z: -0.9,
+          duration: 3,
+        })
+        .to(this.brainClot.model.position, {
+          x: -4.5,
+          y: -0.0,
+          z: -0.75,
+          duration: 3,
+        })
+        .to(this.brainClot.model.position, {
+          x: -4.55,
+          y: 0.15,
+          z: -0.7,
+          duration: 3,
+        })
+        .to(this.brainClot.model.position, {
+          x: -4.5,
+          y: 0.35,
+          z: -0.75,
+          duration: 3,
+        })
+        .to(this.brainClot.model.position, {
+          x: -4.35,
+          y: 0.5,
+          z: -0.78,
+          duration: 3,
+        })
+
+        .to(this.brain, {
+          arteryTwoOpacity: 1.0,
+          duration: 2,
+        })
+        .set(this.brain, {
+          aTwoTrans: false,
+        })
+        .set(this.brain, {
+          greyVisible: true,
+        })
+        .to(this.brain, {
+          greyopacity: 0.1,
+          duration: 3,
+        })
+        .to(this.camera.position, {
+          x: -18.7,
+          y: 2.8,
+          z: -5.6,
+          duration: 5,
         });
 
     brainService.subscribe(state => {
@@ -268,7 +356,14 @@ export default class BrainOneScene extends SceneThree {
       this.pause = false;
       brainService.send({ type: 'ATZERO' });
     }
-    // console.log('pos:', this.camera.position, 'target:', this.controls.target);
+    console.log(
+      'pos:',
+      this.camera.position,
+      'target:',
+      this.controls.target,
+      'rotate:',
+      this.camera.rotation
+    );
     // this.camera.lookAt(0, 0, 0);
   }
 
