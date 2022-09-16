@@ -108,7 +108,7 @@ const mainMachine = createMachine(
         rewindbtn: 'none',
       }),
       selectbrain: assign({
-        homebtn: 'block',
+        homebtn: 'none',
         brainbtn: 'none',
         termbtn: 'none',
         thrillbtn: 'none',
@@ -117,10 +117,10 @@ const mainMachine = createMachine(
         bubblesbtn: 'none',
         aboutbtn: 'none',
         dancebtn: 'none',
-        resetbtn: 'block',
+        resetbtn: 'none',
         nextbtn: 'block',
-        drugbtn: 'block',
-        rewindbtn: 'block',
+        drugbtn: 'none',
+        rewindbtn: 'none',
       }),
     },
   }

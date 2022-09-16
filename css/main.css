@@ -126,8 +126,17 @@ body {
 
 #nextbtn {
   position: fixed;
-  top: 200px;
-  right: 3%;
+  bottom: 3%;
+  left: 3%;
+
+  color: var(--primary-text-color);
+  background-color: var(--main-bg-color);
+  text-align: left;
+  padding: 15px;
+  text-decoration: none;
+  font-size: 32px;
+  font-weight:bold;
+  border-radius: 5px;
 }
 
 #drugbtn {

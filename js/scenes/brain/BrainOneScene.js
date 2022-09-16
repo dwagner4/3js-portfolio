@@ -339,10 +339,10 @@ export default class BrainOneScene extends SceneThree {
       }
       if (state.value === 'plaque') {
         this.cameraRotate = false;
-        // this.cameraPanToplaque().play();
+        this.cameraPanToplaque().play();
       }
       if (state.value === 'breakoff') {
-        // this.dobreakoff().play();
+        this.dobreakoff().play();
       }
       if (state.value === 'travel') {
         this.dotravel().play();
