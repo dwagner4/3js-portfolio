@@ -7,6 +7,7 @@ import SceneThree from '../../systems/SceneThree.js';
 import BrainOne from '../../actors/brain/BrainOne.js';
 import BrainClot from '../../actors/brain/brainclot.js';
 import BrainPlaque from '../../actors/brain/brainPlaque.js';
+import BrainDamage from '../../actors/brain/brainDamage.js';
 import { brainService } from './brainMachine.js';
 
 export default class BrainOneScene extends SceneThree {
@@ -198,7 +199,7 @@ export default class BrainOneScene extends SceneThree {
           aTwoTrans: true,
         })
         .to(this.brain, {
-          arteryTwoOpacity: 0.5,
+          arteryTwoOpacity: 0.3,
           duration: 2,
         })
 
@@ -261,7 +262,7 @@ export default class BrainOneScene extends SceneThree {
           greyVisible: true,
         })
         .to(this.brain, {
-          greyopacity: 0.1,
+          greyopacity: 1.0,
           duration: 3,
         })
         .to(this.camera.position, {
@@ -269,7 +270,59 @@ export default class BrainOneScene extends SceneThree {
           y: 2.8,
           z: -5.6,
           duration: 5,
+        })
+        .to(this.camera.position, {
+          x: -12.1,
+          y: 1.2,
+          z: -1.5,
+          duration: 5,
+        })
+        .to(this.brain, {
+          greyopacity: 0.05,
+          duration: 3,
         });
+
+    this.dostroke = () =>
+      gsap
+        .timeline()
+
+        .to(this.brainDamage, {
+          mainscale: 0.5,
+          duration: 15,
+        });
+
+    this.dodamage = () =>
+      gsap
+        .timeline()
+        .to(this.brainDamage, {
+          subscale: 0.5,
+          mainscale: 1.0,
+          duration: 15,
+        })
+        .to(
+          this.scene.background,
+          {
+            r: 0.5,
+            g: 0.2,
+            b: 0.1,
+            duration: 5,
+          },
+          '<'
+        )
+        .to(this.camera.position, {
+          x: -40,
+          y: 1.2,
+          z: -1.5,
+          duration: 5,
+        })
+        .to(
+          this.brain,
+          {
+            greyopacity: 0.5,
+            duration: 5,
+          },
+          '<'
+        );
 
     brainService.subscribe(state => {
       resetbtn.style.display = state.context.resetbtn;
@@ -286,13 +339,19 @@ export default class BrainOneScene extends SceneThree {
       }
       if (state.value === 'plaque') {
         this.cameraRotate = false;
-        this.cameraPanToplaque().play();
+        // this.cameraPanToplaque().play();
       }
       if (state.value === 'breakoff') {
-        this.dobreakoff().play();
+        // this.dobreakoff().play();
       }
       if (state.value === 'travel') {
         this.dotravel().play();
+      }
+      if (state.value === 'stroke') {
+        this.dostroke().play();
+      }
+      if (state.value === 'damage') {
+        this.dodamage().play();
       }
     });
 
@@ -332,7 +391,12 @@ export default class BrainOneScene extends SceneThree {
     this.brainplaque.model.position.set(-2.25, -8, -0.1);
     this.brainplaque.model.rotateX(Math.PI / 20);
     this.scene.add(this.brainplaque.model);
-    // this.objectsToUpdate.push(this.brainClot);
+
+    this.brainDamage = new BrainDamage();
+    this.brainDamage.init();
+    this.scene.add(this.brainDamage.model);
+    this.brainDamage.model.position.set(-4.35, 0.5, -0.78);
+    this.objectsToUpdate.push(this.brainDamage);
   }
 
   update() {
@@ -356,15 +420,16 @@ export default class BrainOneScene extends SceneThree {
       this.pause = false;
       brainService.send({ type: 'ATZERO' });
     }
-    console.log(
-      'pos:',
-      this.camera.position,
-      'target:',
-      this.controls.target,
-      'rotate:',
-      this.camera.rotation
-    );
+    // console.log(
+    //   'pos:',
+    //   this.camera.position,
+    //   'target:',
+    //   this.controls.target,
+    //   'rotate:',
+    //   this.camera.rotation
+    // );
     // this.camera.lookAt(0, 0, 0);
+    // console.log(this.brainDamage?.model)
   }
 
   dispose() {
