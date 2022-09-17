@@ -20,4 +20,9 @@
 /dist/
 /out-tsc/
 
+# firebase stuff
+.firebase/
+.firebaserc
+firebase.json
+
 storybook-static
