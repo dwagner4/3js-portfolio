@@ -2,7 +2,17 @@ import gsap from 'gsap';
 
 const cameraPanToplaque = target =>
   gsap
-    .timeline()
+    .timeline({
+      callbackScope: target,
+      // eslint-disable-next-line func-names, object-shorthand
+      onStart: function () {
+        this.nextbtn.style.display = 'none';
+      },
+      // eslint-disable-next-line func-names, object-shorthand
+      onComplete: function () {
+        this.nextbtn.style.display = 'block';
+      },
+    })
     // .set(target.camera.position, {z: -30, duration: 1})
     .to(target.brain, {
       greyopacity: 0.1,
@@ -37,11 +47,22 @@ const cameraPanToplaque = target =>
     .to(target.brain, {
       arteryOneOpacity: 0.3,
       duration: 2,
+      onCompleteParams: target,
     });
 
 const dobreakoff = target =>
   gsap
-    .timeline()
+    .timeline({
+      callbackScope: target,
+      // eslint-disable-next-line func-names, object-shorthand
+      onStart: function () {
+        this.nextbtn.style.display = 'none';
+      },
+      // eslint-disable-next-line func-names, object-shorthand
+      onComplete: function () {
+        this.nextbtn.style.display = 'block';
+      },
+    })
     .to(target.brainClot.model.position, {
       x: -2.1,
       y: -7.5,
@@ -95,7 +116,17 @@ const dobreakoff = target =>
 
 const dotravel = target =>
   gsap
-    .timeline()
+    .timeline({
+      callbackScope: target,
+      // eslint-disable-next-line func-names, object-shorthand
+      onStart: function () {
+        this.nextbtn.style.display = 'none';
+      },
+      // eslint-disable-next-line func-names, object-shorthand
+      onComplete: function () {
+        this.nextbtn.style.display = 'block';
+      },
+    })
     .to(target.brain, {
       arteryOneOpacity: 1.0,
       duration: 1,
@@ -233,7 +264,17 @@ const dotravel = target =>
 
 const dostroke = target =>
   gsap
-    .timeline()
+    .timeline({
+      callbackScope: target,
+      // eslint-disable-next-line func-names, object-shorthand
+      onStart: function () {
+        this.nextbtn.style.display = 'none';
+      },
+      // eslint-disable-next-line func-names, object-shorthand
+      onComplete: function () {
+        this.nextbtn.style.display = 'block';
+      },
+    })
 
     .to(target.brainDamage, {
       mainscale: 0.5,
@@ -242,7 +283,17 @@ const dostroke = target =>
 
 const dodamage = target =>
   gsap
-    .timeline()
+    .timeline({
+      callbackScope: target,
+      // eslint-disable-next-line func-names, object-shorthand
+      onStart: function () {
+        this.nextbtn.style.display = 'none';
+      },
+      // eslint-disable-next-line func-names, object-shorthand
+      onComplete: function () {
+        this.nextbtn.style.display = 'block';
+      },
+    })
     .to(target.brainDamage, {
       subscale: 0.5,
       mainscale: 1.0,
