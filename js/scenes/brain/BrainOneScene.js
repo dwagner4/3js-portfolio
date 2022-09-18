@@ -69,6 +69,7 @@ export default class BrainOneScene extends SceneThree {
         this.cameraDistance = 30;
       }
       if (state.value === 'stoprotating') {
+        this.nextbtn.style.display = 'none';
         this.stoprotating = true;
       }
       if (state.value === 'plaque') {
