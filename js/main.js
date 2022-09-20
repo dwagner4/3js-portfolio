@@ -38,15 +38,16 @@ const brainbtn = document.querySelector('#brainbtn');
 const termbtn = document.querySelector('#termbtn');
 const thrillbtn = document.querySelector('#thrillbtn');
 const knightbtn = document.querySelector('#knightbtn');
-const birdsbtn = document.querySelector('#birdsbtn');
-const bubblesbtn = document.querySelector('#bubblesbtn');
+// const birdsbtn = document.querySelector('#birdsbtn');
+// const bubblesbtn = document.querySelector('#bubblesbtn');
 const aboutbtn = document.querySelector('#aboutbtn');
 const dancebtn = document.querySelector('#dance');
 
-const resetbtn = document.querySelector('#resetbtn');
+// const resetbtn = document.querySelector('#resetbtn');
 const nextbtn = document.querySelector('#nextbtn');
 const drugbtn = document.querySelector('#drugbtn');
-const rewindbtn = document.querySelector('#rewindbtn');
+// const rewindbtn = document.querySelector('#rewindbtn');
+const caption = document.querySelector('#caption');
 
 // const fadeDuration = 1;
 
@@ -81,12 +82,12 @@ thrillbtn.onclick = () => {
 knightbtn.onclick = () => {
   mainService.send({ type: 'KNIGHT' });
 };
-birdsbtn.onclick = () => {
-  mainService.send({ type: 'BIRDS' });
-};
-bubblesbtn.onclick = () => {
-  mainService.send({ type: 'BUBBLES' });
-};
+// birdsbtn.onclick = () => {
+//   mainService.send({ type: 'BIRDS' });
+// };
+// bubblesbtn.onclick = () => {
+//   mainService.send({ type: 'BUBBLES' });
+// };
 aboutbtn.onclick = () => {
   mainService.send({ type: 'ABOUT' });
 };
@@ -136,14 +137,15 @@ mainService.subscribe(state => {
   termbtn.style.display = state.context.termbtn;
   thrillbtn.style.display = state.context.thrillbtn;
   knightbtn.style.display = state.context.knightbtn;
-  birdsbtn.style.display = state.context.birdsbtn;
-  bubblesbtn.style.display = state.context.bubblesbtn;
+  // birdsbtn.style.display = state.context.birdsbtn;
+  // bubblesbtn.style.display = state.context.bubblesbtn;
   aboutbtn.style.display = state.context.aboutbtn;
   dancebtn.style.display = state.context.dancebtn;
-  resetbtn.style.display = state.context.resetbtn;
+  // resetbtn.style.display = state.context.resetbtn;
   nextbtn.style.display = state.context.nextbtn;
   drugbtn.style.display = state.context.drugbtn;
-  rewindbtn.style.display = state.context.rewindbtn;
+  caption.innerHTML = state.context.caption;
+  // rewindbtn.style.display = state.context.rewindbtn;
 
   // changing world, don't want to restart world if not changed
   const stateStr = parseState(state.value);

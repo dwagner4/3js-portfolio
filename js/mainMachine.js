@@ -52,7 +52,7 @@ const mainMachine = createMachine(
         },
       },
       knight: {
-        entry: ['selecthome'],
+        entry: ['selectknight'],
         on: {
           HOME: { target: 'home' },
           TERM: { target: 'term' },
@@ -91,6 +91,7 @@ const mainMachine = createMachine(
         nextbtn: 'none',
         drugbtn: 'none',
         rewindbtn: 'none',
+        caption: 'Use your mouse ...',
       }),
       selectthrill: assign({
         homebtn: 'block',
@@ -106,6 +107,7 @@ const mainMachine = createMachine(
         nextbtn: 'none',
         drugbtn: 'none',
         rewindbtn: 'none',
+        caption: 'click "Dance" and wait. ',
       }),
       selectbrain: assign({
         homebtn: 'none',
@@ -121,6 +123,23 @@ const mainMachine = createMachine(
         nextbtn: 'block',
         drugbtn: 'none',
         rewindbtn: 'none',
+        caption: 'unsuspecting patient',
+      }),
+      selectknight: assign({
+        homebtn: 'block',
+        brainbtn: 'block',
+        termbtn: 'block',
+        thrillbtn: 'block',
+        knightbtn: 'block',
+        birdsbtn: 'block',
+        bubblesbtn: 'block',
+        aboutbtn: 'block',
+        dancebtn: 'none',
+        resetbtn: 'none',
+        nextbtn: 'none',
+        drugbtn: 'none',
+        rewindbtn: 'none',
+        caption: 'Animation mixer',
       }),
     },
   }

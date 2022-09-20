@@ -36,6 +36,7 @@ export default class BrainOneScene extends SceneThree {
     this.drugbtn.onclick = () => {
       brainService.send({ type: 'DRUG' });
     };
+    this.caption = document.querySelector('#caption');
     // const rewindbtn = document.querySelector('#rewindbtn');
     // rewindbtn.onclick = () => {
     //   brainService.send({ type: 'REWIND' });

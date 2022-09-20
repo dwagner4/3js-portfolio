@@ -14,6 +14,9 @@ const cameraPanToplaque = target =>
       },
     })
     // .set(target.camera.position, {z: -30, duration: 1})
+    .set(target.caption, {
+      innerHTML: '',
+    })
     .to(target.brain, {
       greyopacity: 0.1,
       duration: 2,
@@ -44,6 +47,9 @@ const cameraPanToplaque = target =>
       },
       '<'
     )
+    .set(target.caption, {
+      innerHTML: 'Plaque in the Internal Carotid Artery',
+    })
     .to(target.brain, {
       arteryOneOpacity: 0.3,
       duration: 2,
@@ -62,6 +68,9 @@ const dobreakoff = target =>
       onComplete: function () {
         this.nextbtn.style.display = 'block';
       },
+    })
+    .set(target.caption, {
+      innerHTML: 'the plaque erupts releasing a blood clot!!',
     })
     .to(target.brainClot.model.position, {
       x: -2.1,
@@ -127,6 +136,7 @@ const dotravel = target =>
         this.nextbtn.style.display = 'block';
       },
     })
+    .set(target.caption, { innerHTML: '' })
     .to(target.brain, {
       arteryOneOpacity: 1.0,
       duration: 1,
@@ -182,7 +192,9 @@ const dotravel = target =>
       arteryTwoOpacity: 0.3,
       duration: 2,
     })
-
+    .set(target.caption, {
+      innerHTML: 'The clot travels up one of the Middle Cerebral Arteries',
+    })
     .set(target.brainClot.model.position, {
       x: -2.5,
       y: -2.0,
@@ -230,7 +242,7 @@ const dotravel = target =>
       z: -0.78,
       duration: 3,
     })
-
+    .set(target.caption, { innerHTML: '' })
     .to(target.brain, {
       arteryTwoOpacity: 1.0,
       duration: 2,
@@ -275,10 +287,13 @@ const dostroke = target =>
         this.nextbtn.style.display = 'block';
       },
     })
-
+    .set(target.caption, { innerHTML: '' })
     .to(target.brainDamage, {
       mainscale: 0.5,
       duration: 15,
+    })
+    .set(target.caption, {
+      innerHTML: 'local brain tissue is starved for Oxygen',
     });
 
 const dodamage = target =>
@@ -294,6 +309,7 @@ const dodamage = target =>
         this.nextbtn.style.display = 'block';
       },
     })
+    .set(target.caption, { innerHTML: '' })
     .to(target.brainDamage, {
       subscale: 0.5,
       mainscale: 1.0,
@@ -309,6 +325,9 @@ const dodamage = target =>
       },
       '<'
     )
+    .set(target.caption, {
+      innerHTML: 'Without treatment, damage becomes permanent',
+    })
     .to(target.camera.position, {
       x: -40,
       y: 1.2,
